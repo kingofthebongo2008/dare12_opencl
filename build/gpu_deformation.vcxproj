@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|Win32">
+      <Configuration>debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|Win32">
+      <Configuration>release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B6727A07-1ADB-4203-9920-F7B5AA56967E}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>gpu_filtering</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 6.5.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(SolutionDir)..\tmp\windows\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\bin\windows\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+    <IntDir>$(SolutionDir)..\tmp\windows\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)..\bin\windows\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level2</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../include;$(IntDir)/shaders;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <SDLCheck>true</SDLCheck>
+      <DisableSpecificWarnings>4267;4503</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>../extern/tbb43_20141023oss_vs2013/lib/intel64/vc12;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cudart.lib;dxguid.lib;dxgi.lib;d3d9.lib;d3d11.lib;d2d1.lib;dwrite.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <CudaCompile>
+      <CodeGeneration>compute_30,sm_35</CodeGeneration>
+      <GPUDebugInfo>false</GPUDebugInfo>
+      <CudaRuntime>Shared</CudaRuntime>
+      <TargetMachinePlatform>32</TargetMachinePlatform>
+      <GenerateLineInfo>false</GenerateLineInfo>
+    </CudaCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../include;$(IntDir)/shaders;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <SDLCheck>true</SDLCheck>
+      <DisableSpecificWarnings>4267;4503</DisableSpecificWarnings>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>../extern/tbb43_20141023oss_vs2013/lib/intel64/vc12;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cudart.lib;dxguid.lib;dxgi.lib;d3d9.lib;d3d11.lib;d2d1.lib;dwrite.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <StackReserveSize>2097152</StackReserveSize>
+    </Link>
+    <CudaCompile>
+      <CodeGeneration>compute_30,sm_35</CodeGeneration>
+      <AdditionalCompilerOptions>
+      </AdditionalCompilerOptions>
+      <TargetMachinePlatform>32</TargetMachinePlatform>
+      <CudaRuntime>Shared</CudaRuntime>
+    </CudaCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="readMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\precompiled.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\d3d11\d3d11_error.h" />
+    <ClInclude Include="..\include\d3d11\d3d11_exception.h" />
+    <ClInclude Include="..\include\d3d11\d3d11_helpers.h" />
+    <ClInclude Include="..\include\d3d11\d3d11_pointers.h" />
+    <ClInclude Include="..\include\d3d11\d3d11_system.h" />
+    <ClInclude Include="..\include\d3d11\dxgi_helpers.h" />
+    <ClInclude Include="..\include\gx\gx_application.h" />
+    <ClInclude Include="..\include\gx\gx_color.h" />
+    <ClInclude Include="..\include\gx\gx_compute_resource.h" />
+    <ClInclude Include="..\include\gx\gx_constant_buffer_helper.h" />
+    <ClInclude Include="..\include\gx\gx_cursor.h" />
+    <ClInclude Include="..\include\gx\gx_default_application.h" />
+    <ClInclude Include="..\include\gx\gx_geometry_helpers.h" />
+    <ClInclude Include="..\include\gx\gx_geometry_pass_common.h" />
+    <ClInclude Include="..\include\gx\gx_pinhole_camera.h" />
+    <ClInclude Include="..\include\gx\gx_render_functions.h" />
+    <ClInclude Include="..\include\gx\gx_render_resource.h" />
+    <ClInclude Include="..\include\gx\gx_view.h" />
+    <ClInclude Include="..\include\gx\gx_view_port.h" />
+    <ClInclude Include="..\include\io\io_keyboard.h" />
+    <ClInclude Include="..\include\io\io_mouse.h" />
+    <ClInclude Include="..\include\math\math_functions.h" />
+    <ClInclude Include="..\include\math\math_geometry.h" />
+    <ClInclude Include="..\include\math\math_graphics.h" />
+    <ClInclude Include="..\include\math\math_half.h" />
+    <ClInclude Include="..\include\math\math_matrix.h" />
+    <ClInclude Include="..\include\math\math_matrix_cuda.h" />
+    <ClInclude Include="..\include\math\math_matrix_host.h" />
+    <ClInclude Include="..\include\math\math_quaternion.h" />
+    <ClInclude Include="..\include\math\math_vector.h" />
+    <ClInclude Include="..\include\math\math_vector_cuda.h" />
+    <ClInclude Include="..\include\math\math_vector_host.h" />
+    <ClInclude Include="..\include\os\windows\com_error.h" />
+    <ClInclude Include="..\include\os\windows\com_initializer.h" />
+    <ClInclude Include="..\include\os\windows\com_pointers.h" />
+    <ClInclude Include="..\include\os\windows\com_ptr.h" />
+    <ClInclude Include="..\include\os\windows\dxgi_pointers.h" />
+    <ClInclude Include="..\include\os\windows\wnd_application.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\include\gx\shaders\gx_shader_copy_texture_ps.hlsl">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)</AdditionalIncludeDirectories>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename)</VariableName>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename)</VariableName>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</HeaderFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="..\include\gx\shaders\gx_shader_full_screen_vs.hlsl">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(WindowsSDKDir)\bin\x64\fxc.exe" "%(FullPath)" /Fh  $(IntDir)shaders\%(Filename)_compiled%(Extension)  /I $(ProjectDir) /T vs_5_0 /Vn %(FileName)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(WindowsSDKDir)\bin\x64\fxc.exe" "%(FullPath)" /Fh  $(IntDir)shaders\%(Filename)_compiled%(Extension)  /I $(ProjectDir) /T vs_5_0 /Vn %(FileName) /Qstrip_reflect /Qstrip_debug /Qstrip_priv /Ges /O3 </Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</Outputs>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename)</VariableName>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</HeaderFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename)</VariableName>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</HeaderFileOutput>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)</AdditionalIncludeDirectories>
+    </FxCompile>
+    <FxCompile Include="..\src\shaders\freeform_shader_bezier_hs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='release|Win32'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='release|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">5.0</ShaderModel>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</HeaderFileOutput>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='release|Win32'">%(Filename)</VariableName>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">%(Filename)</VariableName>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)</AdditionalIncludeDirectories>
+    </FxCompile>
+    <FxCompile Include="..\src\shaders\freeform_shader_bezier_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='release|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">5.0</ShaderModel>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</HeaderFileOutput>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='release|Win32'">%(Filename)</VariableName>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">%(Filename)</VariableName>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)</AdditionalIncludeDirectories>
+    </FxCompile>
+    <FxCompile Include="..\src\shaders\freeform_shader_bezier_ds.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='release|Win32'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='release|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">5.0</ShaderModel>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</HeaderFileOutput>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='release|Win32'">%(Filename)</VariableName>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">%(Filename)</VariableName>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)</AdditionalIncludeDirectories>
+    </FxCompile>
+    <FxCompile Include="..\src\shaders\freeform_shader_bezier_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='release|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">5.0</ShaderModel>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</HeaderFileOutput>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='release|Win32'">%(Filename)</VariableName>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">%(Filename)</VariableName>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)</AdditionalIncludeDirectories>
+    </FxCompile>
+    <FxCompile Include="..\src\shaders\freeform_shader_samples_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='release|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">5.0</ShaderModel>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</HeaderFileOutput>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='release|Win32'">%(Filename)</VariableName>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">%(Filename)</VariableName>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)</AdditionalIncludeDirectories>
+    </FxCompile>
+    <FxCompile Include="..\src\shaders\freeform_shader_samples_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='release|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">5.0</ShaderModel>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(IntDir)shaders\%(Filename)_compiled%(Extension)</HeaderFileOutput>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='release|Win32'">%(Filename)</VariableName>
+      <VariableName Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">%(Filename)</VariableName>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)</AdditionalIncludeDirectories>
+    </FxCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 6.5.targets" />
+  </ImportGroup>
+</Project>
