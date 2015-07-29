@@ -17,6 +17,7 @@
 #include <CL/cl.hpp>
 
 #include "opencl_context.h"
+#include "opencl_command_queue.h"
 
 
 int32_t main( int argc, char const* argv[] )
@@ -33,6 +34,7 @@ int32_t main( int argc, char const* argv[] )
 
     auto d = opencl::create_device(opencl::gpu, opencl::nvidia);
     auto ctx = opencl::create_context( d.get() );
+    auto queue = opencl::create_command_queue( d.get(), ctx.get());
 
     cl::Device d1( *d );
 

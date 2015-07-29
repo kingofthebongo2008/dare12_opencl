@@ -4,6 +4,7 @@
 
 #include "opencl_device.h"
 #include "opencl_context.h"
+#include "opencl_command_queue.h"
 
 
 
@@ -112,6 +113,19 @@ namespace opencl
 
     }
 
+    inline std::unique_ptr<command_queue> create_command_queue(const device* device, const context* context)
+    {
+        cl_device_id id = *device;
+        cl_context   ctx = *context;
+        cl_int       error_code = 0;
 
-    
+        cl_command_queue   queue = clCreateCommandQueue( ctx, id, 0, &error_code);
+
+        throw_if_failed(error_code);
+
+        auto         r = std::make_unique<command_queue>(queue);
+
+        return std::move(r);
+    }
+
 }

@@ -142,6 +142,7 @@
     <ClInclude Include="..\src\opencl_memory_helper.h" />
     <ClInclude Include="..\src\opencl_platform.h" />
     <ClInclude Include="..\src\opencl_ptr.h" />
+    <ClInclude Include="..\src\opencl_command_queue.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\include\gx\shaders\gx_shader_copy_texture_ps.hlsl">
