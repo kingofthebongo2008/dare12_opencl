@@ -3,8 +3,9 @@
 #include <memory>
 
 #include "opencl_device.h"
+#include "opencl_context.h"
 
-#include <iostream>
+
 
 namespace opencl
 {
@@ -53,7 +54,7 @@ namespace opencl
     }
 
 
-    inline std::unique_ptr<device> create_opencl_device(  device_type type, device_vendor vendor )
+    inline std::unique_ptr<device> create_device(  device_type type, device_vendor vendor )
     {
         cl_uint num_platforms;
 
@@ -92,4 +93,25 @@ namespace opencl
 
         return nullptr;
     }
+
+
+    inline std::unique_ptr<context> create_context(const device* device)
+    {
+        cl_device_id id = *device;
+        cl_int       error_code = 0;
+
+        cl_context   ctx = clCreateContext(nullptr, 1, &id, nullptr, nullptr, &error_code);
+
+        throw_if_failed(error_code);
+        
+        auto         r = std::make_unique<context>(ctx);
+
+        clReleaseContext(ctx);
+
+        return std::move(r);
+
+    }
+
+
+    
 }

@@ -14,6 +14,11 @@
 
 #include "opencl_platform.h"
 
+#include <CL/cl.hpp>
+
+#include "opencl_context.h"
+
+
 int32_t main( int argc, char const* argv[] )
 {
     using namespace     os::windows;
@@ -26,7 +31,10 @@ int32_t main( int argc, char const* argv[] )
     auto url2 = fs::build_media_url(source, L"basic2_obstacles_grayscale.png");
     auto url3 = fs::build_media_url(source, L"basic2_obstacles_canny.png");
 
-    auto d = opencl::create_opencl_device(opencl::gpu, opencl::nvidia);
+    auto d = opencl::create_device(opencl::gpu, opencl::nvidia);
+    auto ctx = opencl::create_context( d.get() );
+
+    cl::Device d1( *d );
 
 
 
@@ -43,5 +51,9 @@ int32_t main( int argc, char const* argv[] )
     return 0;
 
 }
+
+
+
+
 
 
