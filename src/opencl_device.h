@@ -21,7 +21,7 @@ namespace opencl
 
         device( cl_device_id device )
         {
-            throw_if_failed(clRetainDevice(m_device));
+            throw_if_failed(clRetainDevice(device));
             m_device = device;
 
         }
@@ -53,6 +53,11 @@ namespace opencl
             }
 
             return *this;
+        }
+
+        operator cl_device_id() const
+        {
+            return m_device;
         }
 
         private:

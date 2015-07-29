@@ -1,8 +1,8 @@
 #include "precompiled.h"
 
-#include <boost/intrusive_ptr.hpp>
 
 #include <cstdint>
+#include <memory>
 
 #include <os/windows/com_initializer.h>
 
@@ -26,7 +26,7 @@ int32_t main( int argc, char const* argv[] )
     auto url2 = fs::build_media_url(source, L"basic2_obstacles_grayscale.png");
     auto url3 = fs::build_media_url(source, L"basic2_obstacles_canny.png");
 
-    auto d = opencl::create_opencl_device(opencl::gpu, opencl::intel);
+    auto d = opencl::create_opencl_device(opencl::gpu, opencl::nvidia);
 
 
 
@@ -34,8 +34,8 @@ int32_t main( int argc, char const* argv[] )
     
 
     //read the png texture
-    auto texture = imaging::read_texture(url0.get_path());
-    auto pixels = texture.get_pixels();
+    //auto texture = imaging::read_texture(url0.get_path());
+    //auto pixels = texture.get_pixels();
 
 
 
