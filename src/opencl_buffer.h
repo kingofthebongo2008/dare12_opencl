@@ -13,6 +13,17 @@
 
 namespace opencl
 {
+    namespace details
+    {
+        inline size_t get_size( cl_mem buffer )
+        {
+            size_t       size = 0;
+            size_t       ret_size = 0;
+            throw_if_failed(clGetMemObjectInfo(buffer, CL_MEM_SIZE, sizeof(size), &size, &ret_size));
+            return size;
+        }
+    }
+
     class buffer : public util::noncopyable
     {
     public:
@@ -72,6 +83,11 @@ namespace opencl
         operator cl_mem() const
         {
             return m_buffer;
+        }
+
+        size_t get_size() const
+        {
+            return details::get_size(m_buffer);
         }
 
     private:

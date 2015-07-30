@@ -35,11 +35,25 @@ int32_t main( int argc, char const* argv[] )
     auto url2 = fs::build_media_url(source, L"basic2_obstacles_grayscale.png");
     auto url3 = fs::build_media_url(source, L"basic2_obstacles_canny.png");
 
-    auto d      = create_device(opencl::gpu, opencl::nvidia);
+    auto d      = create_device(opencl::cpu, opencl::intel);
     auto ctx    = d->create_context(  );
     auto queue  = ctx->create_command_queue( );
 
-    auto buffer = ctx->create_buffer< buffer::read_only >( 1024 * 1024);
+    auto buffer = ctx->create_buffer< buffer::read_only >(1024 * 1024);
+
+
+    {
+        scoped_buffer_writer writer( queue.get(), buffer.get() );
+
+        auto r = writer.get_data<uint32_t>();
+
+        *r = 3;
+
+
+    }
+    
+
+
 
     cl::Device d1( *d );
 
