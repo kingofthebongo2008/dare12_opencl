@@ -136,6 +136,7 @@
     <ClInclude Include="..\include\os\windows\com_ptr.h" />
     <ClInclude Include="..\include\os\windows\dxgi_pointers.h" />
     <ClInclude Include="..\include\os\windows\wnd_application.h" />
+    <ClInclude Include="..\src\opencl_buffer.h" />
     <ClInclude Include="..\src\opencl_context.h" />
     <ClInclude Include="..\src\opencl_device.h" />
     <ClInclude Include="..\src\opencl_error.h" />

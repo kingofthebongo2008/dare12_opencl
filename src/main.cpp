@@ -18,6 +18,7 @@
 
 #include "opencl_context.h"
 #include "opencl_command_queue.h"
+#include "opencl_buffer.h"
 
 
 int32_t main( int argc, char const* argv[] )
@@ -27,14 +28,18 @@ int32_t main( int argc, char const* argv[] )
 
     fs::media_source source(L"../../../media/");
 
+    using namespace opencl;
+
     auto url0 = fs::build_media_url(source, L"basic2_obstacles.png");
     auto url1 = fs::build_media_url(source, L"basic1_obstacles.png");
     auto url2 = fs::build_media_url(source, L"basic2_obstacles_grayscale.png");
     auto url3 = fs::build_media_url(source, L"basic2_obstacles_canny.png");
 
-    auto d = opencl::create_device(opencl::gpu, opencl::nvidia);
-    auto ctx = opencl::create_context( d.get() );
-    auto queue = opencl::create_command_queue( d.get(), ctx.get());
+    auto d      = create_device(opencl::gpu, opencl::nvidia);
+    auto ctx    = d->create_context(  );
+    auto queue  = ctx->create_command_queue( );
+
+    auto buffer = ctx->create_buffer< buffer::read_only >( 1024 * 1024);
 
     cl::Device d1( *d );
 

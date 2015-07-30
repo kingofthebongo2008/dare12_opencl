@@ -95,37 +95,4 @@ namespace opencl
         return nullptr;
     }
 
-
-    inline std::unique_ptr<context> create_context(const device* device)
-    {
-        cl_device_id id = *device;
-        cl_int       error_code = 0;
-
-        cl_context   ctx = clCreateContext(nullptr, 1, &id, nullptr, nullptr, &error_code);
-
-        throw_if_failed(error_code);
-        
-        auto         r = std::make_unique<context>(ctx);
-
-        clReleaseContext(ctx);
-
-        return std::move(r);
-
-    }
-
-    inline std::unique_ptr<command_queue> create_command_queue(const device* device, const context* context)
-    {
-        cl_device_id id = *device;
-        cl_context   ctx = *context;
-        cl_int       error_code = 0;
-
-        cl_command_queue   queue = clCreateCommandQueue( ctx, id, 0, &error_code);
-
-        throw_if_failed(error_code);
-
-        auto         r = std::make_unique<command_queue>(queue);
-
-        return std::move(r);
-    }
-
 }
