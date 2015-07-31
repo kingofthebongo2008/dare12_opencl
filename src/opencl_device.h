@@ -21,9 +21,7 @@ namespace opencl
 
             throw_if_failed(error_code);
 
-            auto         r = std::make_unique<context>(ctx);
-
-            clReleaseContext(ctx);
+            auto         r = std::make_unique<context>(ctx, false);
 
             return std::move(r);
         }
@@ -38,9 +36,23 @@ namespace opencl
 
         }
 
+        template < bool retain = true > 
         device( cl_device_id device )
         {
-            throw_if_failed(clRetainDevice(device));
+            if (retain)
+            {
+                throw_if_failed(clRetainDevice(device));
+            }
+            m_device = device;
+
+        }
+
+        device(cl_device_id device, bool retain)
+        {
+            if (retain)
+            {
+                throw_if_failed(clRetainDevice(device));
+            }
             m_device = device;
 
         }

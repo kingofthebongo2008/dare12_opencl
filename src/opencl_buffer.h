@@ -44,9 +44,23 @@ namespace opencl
 
         }
 
+        template < bool retain = true >
         buffer( cl_mem buffer )
         {
-            throw_if_failed(clRetainMemObject(buffer));
+            if (retain)
+            {
+                throw_if_failed(clRetainMemObject(buffer));
+            }
+            m_buffer = buffer;
+
+        }
+
+        buffer(cl_mem buffer, bool retain)
+        {
+            if (retain)
+            {
+                throw_if_failed(clRetainMemObject(buffer));
+            }
             m_buffer = buffer;
 
         }

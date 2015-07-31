@@ -7,9 +7,9 @@ struct rgb
     uint8_t r;
 };
 
-__kernel void kernel_gray_scale(const __global uint8_t* rgb_t, __global uint8_t* grayscale)
+__kernel void kernel_main(const __global uint8_t* rgb_t, __global uint8_t* grayscale)
 {
-/*
+/*0909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909
     using namespace cuda;
     auto x = blockIdx.x * blockDim.x + threadIdx.x;
     auto y = blockIdx.y * blockDim.y + threadIdx.y;

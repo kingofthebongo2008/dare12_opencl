@@ -42,9 +42,23 @@ namespace opencl
 
         }
 
+        template < bool retain = true >
         command_queue( cl_command_queue command_queue )
         {
-            throw_if_failed(clRetainCommandQueue(command_queue));
+            if (retain)
+            {
+                throw_if_failed(clRetainCommandQueue(command_queue));
+            }
+            m_command_queue = command_queue;
+
+        }
+
+        command_queue(cl_command_queue command_queue, bool retain)
+        {
+            if (retain)
+            {
+                throw_if_failed(clRetainCommandQueue(command_queue));
+            }
             m_command_queue = command_queue;
 
         }

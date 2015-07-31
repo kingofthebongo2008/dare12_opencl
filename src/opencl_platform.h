@@ -88,7 +88,7 @@ namespace opencl
 
                 throw_if_failed(clGetDeviceIDs(platforms[i], device_type, num_devices, &devices[0], &num_devices));
                 
-                return std::move(std::make_unique<device>(devices[0]));
+                return std::move(std::make_unique<device>(devices[0], false));
             }
         }
 

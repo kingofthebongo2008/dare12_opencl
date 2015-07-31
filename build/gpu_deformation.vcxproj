@@ -152,6 +152,7 @@
     <ClInclude Include="..\src\opencl_error.h" />
     <ClInclude Include="..\src\opencl_memory_helper.h" />
     <ClInclude Include="..\src\opencl_platform.h" />
+    <ClInclude Include="..\src\opencl_program.h" />
     <ClInclude Include="..\src\opencl_ptr.h" />
     <ClInclude Include="..\src\opencl_command_queue.h" />
   </ItemGroup>
@@ -264,10 +265,12 @@
       <FileType>Document</FileType>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">opencl_stdint.h</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">opencl_stdint.h</AdditionalInputs>
-      <IR Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</IR>
-      <IR Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</IR>
       <Include Condition="'$(Configuration)|$(Platform)'=='release|Win32'">%(RootDir)%(Directory)</Include>
       <Include Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">%(RootDir)%(Directory)</Include>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|Win32'">0</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">0</Device>
+      <IR Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</IR>
+      <IR Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</IR>
     </Intel_OpenCL_Build_Rules>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -51,7 +51,7 @@ namespace opencl
 
             throw_if_failed(error_code);
 
-            auto    r1 = std::make_unique<buffer>(r);
+            auto    r1 = std::make_unique<buffer>(r, false);
 
             return std::move(r1);
         }
@@ -64,7 +64,7 @@ namespace opencl
 
             throw_if_failed(error_code);
 
-            auto    r1 = std::make_unique<buffer>(r);
+            auto    r1 = std::make_unique<buffer>(r, false);
 
             return std::move(r1);
         }
@@ -78,7 +78,7 @@ namespace opencl
 
             throw_if_failed(error_code);
 
-            auto    r1 = std::make_unique<buffer>(r);
+            auto    r1 = std::make_unique<buffer>(r, false);
 
             return std::move(r1);
         }
@@ -105,7 +105,7 @@ namespace opencl
 
             throw_if_failed(error_code);
 
-            auto         r = std::make_unique<command_queue>(queue);
+            auto         r = std::make_unique<command_queue>(queue, false);
 
             return std::move(r);
         }
@@ -129,9 +129,23 @@ namespace opencl
 
         }
 
+        template < bool retain = true >
         context( cl_context context )
         {
-            throw_if_failed(clRetainContext(context));
+            if (retain)
+            {
+                throw_if_failed(clRetainContext(context));
+            }
+            m_context = context;
+
+        }
+
+        context(cl_context context, bool retain)
+        {
+            if (retain)
+            {
+                throw_if_failed(clRetainContext(context));
+            }
             m_context = context;
 
         }
@@ -185,6 +199,11 @@ namespace opencl
         inline std::unique_ptr<command_queue> create_command_queue()
         {
             return details::create_command_queue(details::get_device(m_context), m_context);
+        }
+
+        inline cl_device_id get_device() const
+        {
+            return details::get_device(m_context);
         }
 
     private:
