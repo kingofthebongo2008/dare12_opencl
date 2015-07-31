@@ -4,11 +4,11 @@ namespace freeform
 {
     namespace details
     {
-        inline void create_shader_bezier_ds(voids)
+        #include "opencl_grayscale_compiled.h"
+
+        inline void create_shader_bezier_ds(void)
         {
-            //strange? see in the hlsl file
-            static
-            #include "opencl_grayscale.ir"
+          
         }
     }
 }
