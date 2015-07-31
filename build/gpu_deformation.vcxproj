@@ -30,6 +30,9 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\IntelOpenCL.props" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -53,7 +56,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level2</WarningLevel>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;_LIB;CL_USE_DEPRECATED_OPENCL_1_1_APIS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../include;$(IntDir)/shaders;../extern/opencl/include;../extern/bolt/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../include;$(IntDir)/shaders;../extern/opencl/include;../extern/bolt/include;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>true</SDLCheck>
       <DisableSpecificWarnings>4267;4503</DisableSpecificWarnings>
     </ClCompile>
@@ -63,6 +66,9 @@
       <AdditionalLibraryDirectories>../extern/opencl/lib/x86;../extern/bolt/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opencl.lib;dxguid.lib;dxgi.lib;d3d9.lib;d3d11.lib;d2d1.lib;dwrite.lib;dinput8.lib;clBolt.runtime.vc120.debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Intel_OpenCL_Build_Rules>
+      <SIMD>3</SIMD>
+    </Intel_OpenCL_Build_Rules>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
     <ClCompile>
@@ -73,7 +79,7 @@
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../include;$(IntDir)/shaders;../extern/opencl/include;../extern/bolt/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../include;$(IntDir)/shaders;../extern/opencl/include;../extern/bolt/include;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>true</SDLCheck>
       <DisableSpecificWarnings>4267;4503</DisableSpecificWarnings>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -89,6 +95,9 @@
       <AdditionalDependencies>opencl.lib;dxguid.lib;dxgi.lib;d3d9.lib;d3d11.lib;d2d1.lib;dwrite.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <StackReserveSize>2097152</StackReserveSize>
     </Link>
+    <Intel_OpenCL_Build_Rules>
+      <SIMD>3</SIMD>
+    </Intel_OpenCL_Build_Rules>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="readMe.txt" />
@@ -136,6 +145,7 @@
     <ClInclude Include="..\include\os\windows\com_ptr.h" />
     <ClInclude Include="..\include\os\windows\dxgi_pointers.h" />
     <ClInclude Include="..\include\os\windows\wnd_application.h" />
+    <ClInclude Include="..\src\opencl\opencl_grayscale.h" />
     <ClInclude Include="..\src\opencl_buffer.h" />
     <ClInclude Include="..\src\opencl_context.h" />
     <ClInclude Include="..\src\opencl_device.h" />
@@ -248,5 +258,23 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)</AdditionalIncludeDirectories>
     </FxCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\opencl\opencl_stdint.h" />
+    <Intel_OpenCL_Build_Rules Include="..\src\opencl\opencl_grayscale.cl">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">opencl_stdint.h</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">opencl_grayscale.o</Outputs>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='release|Win32'">false</ExcludedFromBuild>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">opencl_grayscale.o</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">opencl_stdint.h</AdditionalInputs>
+      <IR Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</IR>
+      <IR Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</IR>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|Win32'">%(RootDir)%(Directory)</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">%(RootDir)%(Directory)</Include>
+    </Intel_OpenCL_Build_Rules>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\IntelOpenCL.targets" />
+  </ImportGroup>
 </Project>

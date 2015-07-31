@@ -20,6 +20,8 @@
 #include "opencl_command_queue.h"
 #include "opencl_buffer.h"
 
+#include "opencl/opencl_grayscale.h"
+
 
 int32_t main( int argc, char const* argv[] )
 {
