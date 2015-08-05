@@ -22,6 +22,8 @@
 
 #include "opencl/opencl_grayscale.h"
 
+#include "opencl/opencl_imaging_cpp.h"
+
 
 int32_t main( int argc, char const* argv[] )
 {

@@ -17,6 +17,7 @@ inline const void* sample_2d_clamp(const uint8_t * buffer, const image_kernel_in
 {
     uint32_t width  = image_kernel_info_width(info);
     uint32_t height = image_kernel_info_height(info);
+    uint32_t pitch = image_kernel_info_pitch(info);
 
     x = min(width - 1, x);
     x = max(0U, x);
@@ -24,43 +25,16 @@ inline const void* sample_2d_clamp(const uint8_t * buffer, const image_kernel_in
     y = min(height - 1, y);
     y = max(0U, y);
 
-    return  ( buffer + y * image_kernel_info_pitch(info) + x * sizeof_t);
+    return  ( buffer + y * pitch + x * sizeof_t);
 }
 
-
-/*
-
-enum border_type : int32_t
+inline void write_2d_uint8( uint8_t * buffer, const image_kernel_info* info, uint32_t x, uint32_t y, uint8_t value )
 {
-    clamp = 0
-};
+    uint32_t pitch = image_kernel_info_pitch(info);
 
-
-
-
-
-template < typename t > __device__ inline const t* sample_2d(const uint8_t * buffer, const image_kernel_info& info, uint32_t x, uint32_t y)
-{
-    return reinterpret_cast<const t*> (buffer + y * info.pitch() + x * sizeof(t));
-}
-
-template < typename t, border_type u > __device__ inline const t* sample_2d(const uint8_t * buffer, const image_kernel_info& info, uint32_t x, uint32_t y )
-{
-    //clamp to border
-
-    x = min(info.width()  - 1 , x);
-    x = max(0U, x);
-
-    y = min( info.height() - 1 , y );
-    y = max(0U, y);
-
-    return reinterpret_cast<const t*> (buffer + y * info.pitch() + x * sizeof(t));
-}
-
-template < typename t > __device__ inline void write_2d( uint8_t * buffer, const image_kernel_info& info, uint32_t x, uint32_t y, t value )
-{
-    auto v = reinterpret_cast<t*> ( buffer + y * info.pitch() + x * sizeof(t) );
+    uint8_t* v = (uint8_t*) (buffer + y * pitch + x * sizeof(value) );
     *v = value;
 }
-*/
+
+
 

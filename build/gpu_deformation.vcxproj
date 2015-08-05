@@ -146,6 +146,9 @@
     <ClInclude Include="..\include\os\windows\dxgi_pointers.h" />
     <ClInclude Include="..\include\os\windows\wnd_application.h" />
     <ClInclude Include="..\src\opencl\opencl_grayscale.h" />
+    <ClInclude Include="..\src\opencl\opencl_image_kernel_info.h" />
+    <ClInclude Include="..\src\opencl\opencl_imaging.h" />
+    <ClInclude Include="..\src\opencl\opencl_imaging_cpp.h" />
     <ClInclude Include="..\src\opencl_buffer.h" />
     <ClInclude Include="..\src\opencl_context.h" />
     <ClInclude Include="..\src\opencl_device.h" />
