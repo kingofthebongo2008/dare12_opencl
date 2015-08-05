@@ -1,4 +1,5 @@
 #include "opencl_stdint.h"
+#include "opencl_imaging.h"
 
 struct rgb
 {
@@ -7,9 +8,11 @@ struct rgb
     uint8_t r;
 };
 
-__kernel void kernel_main(const __global uint8_t* rgb_t, __global uint8_t* grayscale)
+
+kernel void kernel_main(const global read_only uint8_t* rgb_t, global write_only uint8_t* grayscale, const constant image_kernel_info* src)
 {
-/*0909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909
+
+/*
     using namespace cuda;
     auto x = blockIdx.x * blockDim.x + threadIdx.x;
     auto y = blockIdx.y * blockDim.y + threadIdx.y;
@@ -27,6 +30,19 @@ __kernel void kernel_main(const __global uint8_t* rgb_t, __global uint8_t* grays
         write_2d(grayscale, dst, x, y, gray_quantized);
     }
 */
+
+    size_t x = get_global_id(0);
+    size_t y = get_global_id(1);
+
+    const image_kernel_info* src2 = (const image_kernel_info*) src;
+
+    if (is_in_interior(src2, x, y))
+    {
+
+    }
+
+
+    grayscale[0] = 0;
 }
 
 
