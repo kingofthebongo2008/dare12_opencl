@@ -10,8 +10,8 @@
 
 namespace imaging
 {
-    typedef texture < cpu_texture_storage >     cpu_texture;
-    //typedef texture < cuda_texture_storage >    cuda_texture;
+    typedef texture < cpu_texture_storage    >    cpu_texture;
+    typedef texture < opencl_texture_storage >    opencl_texture;
 
     inline cpu_texture read_texture(const wchar_t* url_path)
     {

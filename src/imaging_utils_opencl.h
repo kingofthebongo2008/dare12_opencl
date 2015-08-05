@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "opencl_buffer.h"
+#include "opencl_command_queue.h"
 
 namespace imaging
 {
@@ -29,20 +30,20 @@ namespace imaging
             std::shared_ptr< uint8_t > m_pixels;
         };
 
-        opencl_texture_storage( std::shared_ptr< opencl::buffer > buffer, size_t size ) :
+        opencl_texture_storage( std::shared_ptr< opencl::buffer > buffer) :
         m_pixels( buffer )
-        , m_size(size)
         {
 
         }
 
-        storage_proxy  get_pixels( ) const
+        storage_proxy  get_pixels( const opencl::command_queue* queue ) const
         {
-            std::unique_ptr<uint8_t[]> pixels(new uint8_t[m_size]);
+            auto size = m_pixels->get_size();
+            std::unique_ptr<uint8_t[]> pixels(new uint8_t[size]);
 
-            /*
-            cuda::throw_if_failed(cudaMemcpy(pixels.get(), m_pixels.get(), m_size, cudaMemcpyDeviceToHost));
-            */
+            opencl::scoped_buffer_reader r( queue, m_pixels.get() );
+
+            std::memcpy(pixels.get(), r.get_data(), size );
 
             return storage_proxy(std::shared_ptr<uint8_t>( pixels.release() , std::default_delete< uint8_t[] >()));
         }
@@ -53,9 +54,7 @@ namespace imaging
         }
 
         private:
-
         std::shared_ptr< opencl::buffer > m_pixels;    //points to device memory
-        size_t                            m_size;
     };
 
 }

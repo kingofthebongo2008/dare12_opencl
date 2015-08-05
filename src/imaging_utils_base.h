@@ -32,7 +32,7 @@ namespace imaging
 
 
     template <typename pixels_storage>
-    class texture : public pixels_storage
+    class texture 
     {
 
     public:
@@ -78,6 +78,18 @@ namespace imaging
         size_t get_size() const
         {
             return m_size;
+        }
+
+        template <typename a0>
+        typename pixels_storage::storage_proxy get_pixels( a0&& a ) const
+        {
+            return m_storage.get_pixels( a );
+        }
+
+
+        typename pixels_storage::storage_proxy get_pixels() const
+        {
+            return m_storage.get_pixels();
         }
 
     private:

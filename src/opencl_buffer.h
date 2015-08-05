@@ -44,7 +44,7 @@ namespace opencl
         }
 
         template < bool retain = true >
-        buffer( cl_mem buffer )
+        explicit buffer( cl_mem buffer )
         {
             if (retain)
             {
@@ -54,7 +54,7 @@ namespace opencl
 
         }
 
-        buffer(cl_mem buffer, bool retain)
+        explicit buffer(cl_mem buffer, bool retain)
         {
             if (retain)
             {
