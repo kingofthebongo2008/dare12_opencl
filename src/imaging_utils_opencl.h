@@ -3,8 +3,7 @@
 #include <cstdint>
 #include <memory>
 
-#include "cuda_helper.h"
-#include "cuda_memory_helper.h"
+#include "opencl_buffer.h"
 
 namespace imaging
 {
@@ -30,8 +29,8 @@ namespace imaging
             std::shared_ptr< uint8_t > m_pixels;
         };
 
-        cuda_texture_storage( uint8_t pixels[], size_t size ) :
-        m_pixels(pixels, cuda::default_delete<uint8_t>() )
+        opencl_texture_storage( std::shared_ptr< opencl::buffer > buffer, size_t size ) :
+        m_pixels( buffer )
         , m_size(size)
         {
 
@@ -41,20 +40,22 @@ namespace imaging
         {
             std::unique_ptr<uint8_t[]> pixels(new uint8_t[m_size]);
 
+            /*
             cuda::throw_if_failed(cudaMemcpy(pixels.get(), m_pixels.get(), m_size, cudaMemcpyDeviceToHost));
+            */
 
             return storage_proxy(std::shared_ptr<uint8_t>( pixels.release() , std::default_delete< uint8_t[] >()));
         }
 
-        uint8_t*    get_gpu_pixels() const
+        std::shared_ptr< opencl::buffer >   get_gpu_pixels() const
         {
-            return m_pixels.get();
+            return m_pixels;
         }
 
         private:
 
-        std::shared_ptr< uint8_t > m_pixels;    //points to device memory
-        size_t                     m_size;
+        std::shared_ptr< opencl::buffer > m_pixels;    //points to device memory
+        size_t                            m_size;
     };
 
 }

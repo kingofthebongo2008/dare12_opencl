@@ -6,7 +6,7 @@
 #include "imaging.h"
 #include "imaging_utils_base.h"
 #include "imaging_utils_cpu.h"
-#include "imaging_utils_cuda.h"
+#include "imaging_utils_opencl.h"
 
 namespace imaging
 {
@@ -33,7 +33,7 @@ namespace imaging
         std::unique_ptr<uint8_t[]> temp(new (std::nothrow) uint8_t[image_size]);
 
         bitmap.copy_pixels(nullptr, row_pitch, image_size, temp.get());
-        return cpu_texture(std::get<0>(size), std::get<1>(size), bpp, image_size, row_pitch, image_type::rgb, temp.release());
+        return cpu_texture(std::get<0>(size), std::get<1>(size), bpp, image_size, row_pitch, image_type::rgb, cpu_texture_storage(temp.release(), image_size));
     }
 
     template <typename texture > inline void write_texture(const texture& t, const wchar_t* url_path)

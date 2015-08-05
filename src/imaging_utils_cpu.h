@@ -31,6 +31,11 @@ namespace imaging
         };
 
 
+        cpu_texture_storage()
+        {
+
+        }
+
         cpu_texture_storage(uint8_t pixels[], size_t size) :
             m_pixels(pixels, std::default_delete< uint8_t[] >())
         {

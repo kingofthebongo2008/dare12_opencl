@@ -9,7 +9,6 @@
 #include <util/util_noncopyable.h>
 
 #include "opencl_error.h"
-#include "opencl_context.h"
 
 namespace opencl
 {

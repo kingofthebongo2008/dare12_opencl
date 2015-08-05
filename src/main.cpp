@@ -8,6 +8,7 @@
 
 #include <fs/fs_media.h>
 
+
 #include "imaging_utils.h"
 
 #include "opencl_ptr.h"
@@ -16,13 +17,15 @@
 
 #include <CL/cl.hpp>
 
-#include "opencl_context.h"
+
 #include "opencl_command_queue.h"
 #include "opencl_buffer.h"
 
 #include "opencl/opencl_grayscale.h"
 
 #include "opencl/opencl_imaging_cpp.h"
+
+
 
 
 int32_t main( int argc, char const* argv[] )
@@ -52,8 +55,8 @@ int32_t main( int argc, char const* argv[] )
     
 
     //read the png texture
-    //auto texture = imaging::read_texture(url0.get_path());
-    //auto pixels = texture.get_pixels();
+    auto texture = imaging::read_texture(url0.get_path());
+    auto pixels = texture.get_pixels();
 
 
 

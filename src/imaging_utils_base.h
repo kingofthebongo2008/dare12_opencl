@@ -34,16 +34,19 @@ namespace imaging
     template <typename pixels_storage>
     class texture : public pixels_storage
     {
+
     public:
-        texture(uint32_t width, uint32_t height, size_t bpp, size_t size, uint32_t pitch, image_type type, uint8_t pixels[]) :
+
+        texture( uint32_t width, uint32_t height, size_t bpp, size_t size, uint32_t pitch, image_type type, const pixels_storage& storage ) :
             m_width(width)
             , m_height(height)
             , m_bpp(bpp)
             , m_size(size)
             , m_row_pitch(pitch)
             , m_image_type(type)
-            , pixels_storage(pixels, size)
+            , m_storage(storage)
         {
+
         }
 
         uint32_t get_width() const
@@ -79,12 +82,13 @@ namespace imaging
 
     private:
 
-        image_type  m_image_type;
-        size_t      m_bpp;
-        uint32_t    m_row_pitch;
-        size_t      m_size;
+        image_type      m_image_type;
+        size_t          m_bpp;
+        uint32_t        m_row_pitch;
+        size_t          m_size;
 
-        uint32_t    m_width;
-        uint32_t    m_height;
+        uint32_t        m_width;
+        uint32_t        m_height;
+        pixels_storage  m_storage;
     };
 }
