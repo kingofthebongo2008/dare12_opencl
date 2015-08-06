@@ -52,6 +52,7 @@ int32_t main( int argc, char const* argv[] )
     auto pixels_cpu1 = pixels.get_pixels_cpu();
 
     
+    //create opencl buffers
     std::shared_ptr< opencl::buffer> buffer_shared( ctx->create_buffer< buffer::read_only | buffer::copy_host_pointer >(texture.get_size(), pixels.get_pixels_cpu()) );
     
     imaging::opencl_texture t(texture.get_width(), texture.get_height(), texture.get_bpp(), texture.get_size(), texture.get_pitch(), texture.get_image_type(), imaging::opencl_texture_storage( buffer_shared ) );

@@ -65,7 +65,7 @@ namespace opencl
 
         throw_if_failed(clGetPlatformIDs(num_platforms, &platforms[0], &num_platforms));
         
-        for (auto i = 0; i < num_platforms; ++i)
+        for (auto i = 0U; i < num_platforms; ++i)
         {
             size_t vendor_name_length;
 
