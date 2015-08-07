@@ -8,6 +8,7 @@
 
 #include "opencl_error.h"
 #include "opencl_buffer.h"
+#include "opencl_kernel.h"
 
 namespace opencl
 {
@@ -50,6 +51,23 @@ namespace opencl
 
             throw_if_failed(clEnqueueUnmapMemObject(queue, buffer, mapped_ptr, 0, nullptr, nullptr));
         }
+
+        inline void launch2d(cl_command_queue queue, cl_kernel kernel, uint32_t x, uint32_t y)
+        {
+            size_t global_work_size[2] = { x, y };
+            throw_if_failed(clEnqueueNDRangeKernel(queue, kernel, 2, nullptr, &global_work_size[0], nullptr, 0, nullptr, nullptr ) );
+        }
+
+        inline void launch1d(cl_command_queue queue, cl_kernel kernel, uint32_t x)
+        {
+            size_t global_work_size[1] = { x };
+            throw_if_failed(clEnqueueNDRangeKernel(queue, kernel, 1, nullptr, &global_work_size[0], nullptr, 0, nullptr, nullptr));
+        }
+
+        inline void synchronize(cl_command_queue queue)
+        {
+            throw_if_failed(clFinish(queue));
+        }
     }
 
     class command_queue : public util::noncopyable
@@ -69,7 +87,6 @@ namespace opencl
                 throw_if_failed(clRetainCommandQueue(command_queue));
             }
             m_command_queue = command_queue;
-
         }
 
         command_queue(cl_command_queue command_queue, bool retain)
@@ -134,6 +151,21 @@ namespace opencl
         void end_buffer_read(const buffer* buffer, void* mapped_pointer) const
         {
             return details::unmap_buffer_write(m_command_queue, *buffer, mapped_pointer);
+        }
+
+        void launch1d( const kernel* kernel, uint32_t x )
+        {
+            details::launch1d(m_command_queue, *kernel, x);
+        }
+
+        void launch2d(const kernel* kernel, uint32_t x, uint32_t y)
+        {
+            details::launch2d(m_command_queue, *kernel, x, y);
+        }
+
+        void synchronize()
+        {
+            details::synchronize(m_command_queue);
         }
 
         private:

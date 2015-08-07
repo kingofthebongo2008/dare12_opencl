@@ -1,14 +1,14 @@
 #pragma once
 
 #include <utility>
+#include <memory>
 
 #include <CL/cl.h>
 
 #include <util/util_noncopyable.h>
 
 #include "opencl_error.h"
-#include "opencl_buffer.h"
-#include "opencl_command_queue.h"
+#include "opencl_kernel.h"
 
 namespace opencl
 {
@@ -80,6 +80,17 @@ namespace opencl
         operator cl_program() const
         {
             return m_program;
+        }
+
+        inline std::unique_ptr<kernel> create_kernel(const char* name)
+        {
+            cl_int      error_code = 0;
+            cl_kernel   k = clCreateKernel(m_program, name, &error_code);
+
+            throw_if_failed(error_code);
+            auto         r = std::make_unique<kernel>(k, false);
+
+            return std::move(r);
         }
 
     private:

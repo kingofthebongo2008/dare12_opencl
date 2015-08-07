@@ -3,6 +3,7 @@
 #include "opencl_image_kernel_info.h"
 
 
+
 static inline bool is_in_interior( const image_kernel_info* info, uint32_t x, uint32_t y)
 {
     return ( x < image_kernel_info_width(info) && y < image_kernel_info_height(info));

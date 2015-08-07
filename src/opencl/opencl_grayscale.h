@@ -30,8 +30,10 @@ namespace freeform
             auto code = std::get<0 >(binary);
 
             auto program = clCreateProgramWithBinary(context, 1, &device, &length, &code, &binary_status, &errcode_ret);
-
+           
             opencl::throw_if_failed(errcode_ret);
+
+            opencl::throw_if_failed(clBuildProgram(  program, 1, &device, nullptr, nullptr, nullptr ) );
 
             return program;
         }
