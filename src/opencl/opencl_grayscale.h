@@ -5,8 +5,8 @@
 
 #include <CL/cl.h>
 
-#include "opencl_error.h"
-#include "opencl_program.h"
+#include <opencl/opencl_error.h>
+#include <opencl/opencl_program.h>
 
 namespace freeform
 {
