@@ -10,16 +10,25 @@ typedef struct _rgb
 
 
 //kernel void kernel_main(const global read_only uint8_t* rgb_t, global write_only uint8_t* grayscale, const image_kernel_info src, const image_kernel_info dst)
-kernel void kernel_main( global read_only uint32_t* grayscale_in, const image_kernel_info src, const image_kernel_info dst )
+kernel void kernel_main( global write_only uint8_t* grayscale,  image_kernel_info src, image_kernel_info dst )
 {
     size_t x = get_global_id(0);
     size_t y = get_global_id(1);
 
-    uint8_t* grayscale = (uint8_t *)(grayscale_in);
-           
+         
     
     const image_kernel_info* src2 = (const image_kernel_info*) &src;
     const image_kernel_info* dst2 = (const image_kernel_info*) &dst;
+
+    if (is_in_interior(src2, x, y))
+    {
+        write_2d_uint8( grayscale, dst2, x, y, 3);
+    }
+
+    
+    write_2d_uint8( grayscale, dst2, 0, 0, 3);
+
+    grayscale[0] = 3;
 
     /* 
     
@@ -39,8 +48,6 @@ kernel void kernel_main( global read_only uint32_t* grayscale_in, const image_ke
         write_2d_uint8( grayscale2, dst2, x, y, gray_quantized);
     }
     */
-    
-    write_2d_uint8( grayscale, dst2, x, y, 3);
 }
 
 

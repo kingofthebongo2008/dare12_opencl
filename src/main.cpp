@@ -34,7 +34,7 @@ int32_t main( int argc, char const* argv[] )
     auto url2 = fs::build_media_url(source, L"basic2_obstacles_grayscale.png");
     auto url3 = fs::build_media_url(source, L"basic2_obstacles_canny.png");
 
-    auto d          = create_device(opencl::cpu, opencl::intel);
+    auto d          = create_device(opencl::gpu, opencl::amd);
     auto ctx        = d->create_context(  );
     auto queue      = ctx->create_command_queue( );
 

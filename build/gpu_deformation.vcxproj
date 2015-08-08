@@ -278,7 +278,7 @@
       <Include Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)..\src\opencl</Include>
       <Include Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)..\src\opencl</Include>
       <Device Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</Device>
-      <Device Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">3</Device>
       <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</SPIR32>
       <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</SPIR32>
     </Intel_OpenCL_Build_Rules>
