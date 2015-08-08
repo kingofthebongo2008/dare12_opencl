@@ -273,12 +273,11 @@
     <None Include="..\src\opencl\opencl_stdint.h" />
     <Intel_OpenCL_Build_Rules Include="..\src\opencl\opencl_grayscale.cl">
       <FileType>Document</FileType>
-      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)..\src\opencl\opencl_stdint.h;$(ProjectDir)..\src\opencl\opencl_imaging.h;$(ProjectDir)..\src\opencl\opencl_image_kernel_info.h</AdditionalDependencies>
-      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)..\src\opencl\opencl_stdint.h;$(ProjectDir)..\src\opencl\opencl_imaging.h;$(ProjectDir)..\src\opencl\opencl_image_kernel_info.h</AdditionalDependencies>
+      <AdditionalDependencies>$(ProjectDir)..\src\opencl\opencl_stdint.h;$(ProjectDir)..\src\opencl\opencl_imaging.h;$(ProjectDir)..\src\opencl\opencl_image_kernel_info.h</AdditionalDependencies>
       <Include Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)..\src\opencl</Include>
       <Include Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)..\src\opencl</Include>
       <Device Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</Device>
-      <Device Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">3</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</Device>
       <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</SPIR32>
       <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</SPIR32>
     </Intel_OpenCL_Build_Rules>

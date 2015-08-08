@@ -4,15 +4,15 @@
 
 typedef struct _image_kernel_info
 {
-    size_t      m_bpp;
-    size_t      m_size;
+    uint32_t    m_bpp;
+    uint32_t    m_size;
 
     uint32_t    m_pitch;
     uint32_t    m_width;
     uint32_t    m_height;
 } image_kernel_info;
 
-inline image_kernel_info image_kernel_info_create( size_t bpp, size_t size, uint32_t pitch, uint32_t width, uint32_t height )
+inline image_kernel_info image_kernel_info_create(uint32_t bpp, uint32_t size, uint32_t pitch, uint32_t width, uint32_t height )
 {
     image_kernel_info r;
    
@@ -25,7 +25,7 @@ inline image_kernel_info image_kernel_info_create( size_t bpp, size_t size, uint
     return r;
 }
 
-size_t image_kernel_info_bpp( const image_kernel_info* r)
+uint32_t image_kernel_info_bpp( const image_kernel_info* r)
 {
     return r->m_bpp;
 }
@@ -36,7 +36,7 @@ uint32_t image_kernel_info_pitch(const image_kernel_info* r)
 }
 
 
-size_t  image_kernel_info_size(const image_kernel_info* r)
+uint32_t  image_kernel_info_size(const image_kernel_info* r)
 {
     return r->m_size;
 }
@@ -50,7 +50,6 @@ uint32_t  image_kernel_info_height(const image_kernel_info* r)
 {
     return r->m_height;
 }
-
 
 
 
