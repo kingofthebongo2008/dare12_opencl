@@ -17,27 +17,27 @@ namespace opencl
             this->m_height = height;
         }
 
-        size_t bpp(const image_kernel_info* r) const
+        size_t bpp() const
         {
             return image_kernel_info_bpp(this);
         }
 
-        uint32_t pitch(const image_kernel_info* r) const
+        uint32_t pitch() const
         {
             return image_kernel_info_pitch(this);
         }
 
-        size_t  size(const image_kernel_info* r) const
+        size_t  size() const
         {
             return image_kernel_info_size(this);
         }
 
-        uint32_t  width(const image_kernel_info* r) const
+        uint32_t  width() const
         {
             return image_kernel_info_width(this);
         }
 
-        uint32_t  height(const image_kernel_info* r) const
+        uint32_t  height() const
         {
             return image_kernel_info_height(this);
         }

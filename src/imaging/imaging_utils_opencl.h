@@ -53,6 +53,11 @@ namespace imaging
             return m_pixels;
         }
 
+        operator cl_mem() const
+        {
+            return (cl_mem) *m_pixels.get();
+        }
+
         private:
         std::shared_ptr< opencl::buffer > m_pixels;    //points to device memory
     };

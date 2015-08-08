@@ -92,6 +92,11 @@ namespace imaging
             return m_storage.get_pixels();
         }
 
+        const pixels_storage& get_storage() const
+        {
+            return m_storage;
+        }
+
     private:
 
         image_type      m_image_type;

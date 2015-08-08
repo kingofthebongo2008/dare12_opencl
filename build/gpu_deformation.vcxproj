@@ -103,6 +103,7 @@
     <Text Include="readMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\freeform_grayscale.cpp" />
     <ClCompile Include="..\src\precompiled.cpp" />
     <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
@@ -153,10 +154,13 @@
     <ClInclude Include="..\include\os\windows\com_ptr.h" />
     <ClInclude Include="..\include\os\windows\dxgi_pointers.h" />
     <ClInclude Include="..\include\os\windows\wnd_application.h" />
-    <ClInclude Include="..\src\imaging_utils.h" />
-    <ClInclude Include="..\src\imaging_utils_base.h" />
-    <ClInclude Include="..\src\imaging_utils_cpu.h" />
-    <ClInclude Include="..\src\imaging_utils_opencl.h" />
+    <ClInclude Include="..\src\freeform_grayscale.h" />
+    <ClInclude Include="..\src\imaging\imaging.h" />
+    <ClInclude Include="..\src\imaging\imaging_opencl.h" />
+    <ClInclude Include="..\src\imaging\imaging_utils.h" />
+    <ClInclude Include="..\src\imaging\imaging_utils_base.h" />
+    <ClInclude Include="..\src\imaging\imaging_utils_cpu.h" />
+    <ClInclude Include="..\src\imaging\imaging_utils_opencl.h" />
     <ClInclude Include="..\src\opencl\opencl_grayscale.h" />
     <ClInclude Include="..\src\opencl\opencl_image_kernel_info.h" />
     <ClInclude Include="..\src\opencl\opencl_imaging.h" />

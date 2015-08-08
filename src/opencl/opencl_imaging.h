@@ -2,9 +2,6 @@
 
 #include "opencl_image_kernel_info.h"
 
-
-
-
 static inline bool is_in_interior( const image_kernel_info* info, uint32_t x, uint32_t y)
 {
     return ( x < image_kernel_info_width(info) && y < image_kernel_info_height(info));
@@ -34,8 +31,8 @@ inline void write_2d_uint8( uint8_t * buffer, const image_kernel_info* info, uin
 {
     uint32_t pitch = image_kernel_info_pitch(info);
 
-    uint8_t* v = (uint8_t*) (buffer + y * pitch + x * sizeof(value) );
-    *v = value;
+    uint32_t offset = (  y * pitch + x  );
+    *(buffer + offset) = value;
 }
 
 
