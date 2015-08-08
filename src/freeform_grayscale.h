@@ -39,9 +39,10 @@ namespace freeform
 
         auto grayscale = create_opencl_texture<image_type::grayscale>(ctx, width, height );
 
-        kernel->set_argument(0, (cl_mem) grayscale.get_storage() );
-        kernel->set_argument(1, create_image_kernel_info(color) );
-        kernel->set_argument(2, create_image_kernel_info(grayscale) );
+        kernel->set_argument(0, (cl_mem) color.get_storage() );
+        kernel->set_argument(1, (cl_mem)grayscale.get_storage());
+        kernel->set_argument(2, create_image_kernel_info(color) );
+        kernel->set_argument(3, create_image_kernel_info(grayscale) );
 
         
         queue->launch2d(kernel.get(), width, height);

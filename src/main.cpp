@@ -34,14 +34,16 @@ int32_t main( int argc, char const* argv[] )
     auto url2 = fs::build_media_url(source, L"basic2_obstacles_grayscale.png");
     auto url3 = fs::build_media_url(source, L"basic2_obstacles_canny.png");
 
+    auto url  = fs::build_media_url(source, L"temp.png");
+
     auto d          = create_device(opencl::gpu, opencl::amd);
-    auto ctx        = d->create_context(  );
-    auto queue      = ctx->create_command_queue( );
+    auto ctx        = d->create_context();
+    auto queue      = ctx->create_command_queue();
 
 
     //read the png texture
-    auto texture = imaging::read_texture(url0.get_path());
-    auto pixels  = texture.get_pixels();
+    auto texture     = imaging::read_texture(url0.get_path());
+    auto pixels      = texture.get_pixels();
     auto pixels_cpu1 = pixels.get_pixels_cpu();
 
     auto color = freeform::create_color_texture(ctx.get(), texture);
@@ -50,7 +52,7 @@ int32_t main( int argc, char const* argv[] )
     auto pixels1     = grayscale.get_pixels(queue.get());
     auto pixels_cpu2 = pixels1.get_pixels_cpu();
 
-    
+    imaging::write_texture( grayscale, url.get_path(), queue.get() );
        
 
     return 0;

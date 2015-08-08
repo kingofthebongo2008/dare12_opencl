@@ -36,7 +36,7 @@ namespace imaging
         return cpu_texture(std::get<0>(size), std::get<1>(size), bpp, image_size, row_pitch, image_type::rgb, cpu_texture_storage(temp.release(), image_size));
     }
 
-    template <typename texture > inline void write_texture(const texture& t, const wchar_t* url_path)
+    template <typename texture, typename... args > inline void write_texture(const texture& t, const wchar_t* url_path, args... a)
     {
         using namespace os::windows;
 
@@ -70,7 +70,7 @@ namespace imaging
         throw_if_failed<com_exception>(frame0->SetPixelFormat(&formatGUID));
         throw_if_failed<com_exception>(IsEqualGUID(formatGUID, formatGUID_required));
 
-        auto proxy = t.get_pixels();
+        auto proxy = t.get_pixels( a... );
 
 
         throw_if_failed<com_exception>(frame0->WritePixels(t.get_height(), t.get_pitch(), t.get_size(), proxy.get_pixels_cpu()));
