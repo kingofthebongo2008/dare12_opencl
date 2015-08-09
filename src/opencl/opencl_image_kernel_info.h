@@ -10,6 +10,8 @@ typedef struct _image_kernel_info
     uint32_t    m_pitch;
     uint32_t    m_width;
     uint32_t    m_height;
+
+    uint32_t    m_padding[3];
 } image_kernel_info;
 
 inline image_kernel_info image_kernel_info_create(uint32_t bpp, uint32_t size, uint32_t pitch, uint32_t width, uint32_t height )

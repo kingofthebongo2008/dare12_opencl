@@ -7,6 +7,7 @@
 
 #include <opencl/opencl_error.h>
 #include <opencl/opencl_program.h>
+#include <opencl/opencl_program_helpers.h>
 
 namespace freeform
 {
@@ -29,11 +30,7 @@ namespace freeform
             auto length = std::get<1>(binary);
             auto code = std::get<0 >(binary);
 
-            auto program = clCreateProgramWithBinary(context, 1, &device, &length, &code, &binary_status, &errcode_ret);
-          
-            opencl::throw_if_failed(errcode_ret);
-            opencl::throw_if_failed(clBuildProgram(  program, 1, &device, nullptr, nullptr, nullptr ) );
-            return program;
+            return opencl::create_program( context, device, code, length);
         }
     }
 

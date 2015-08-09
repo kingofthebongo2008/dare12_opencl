@@ -7,7 +7,7 @@ static inline bool is_in_interior( const image_kernel_info* info, uint32_t x, ui
     return ( x < image_kernel_info_width(info) && y < image_kernel_info_height(info));
 }
 
-inline const global uint8_t* sample_2d_clamp(const global uint8_t * buffer, const image_kernel_info* info, uint32_t x, uint32_t y, size_t sizeof_t)
+inline const global uint8_t* sample_2d_clamp(const global uint8_t * buffer, const image_kernel_info* info, uint32_t x, uint32_t y, uint32_t sizeof_t)
 {
     uint32_t width  = image_kernel_info_width(info);
     uint32_t height = image_kernel_info_height(info);
