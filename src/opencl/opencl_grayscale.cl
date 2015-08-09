@@ -8,7 +8,7 @@ typedef struct _rgb
     uint8_t r;
 } rgb;
 
-kernel void kernel_main(const global read_only uint8_t* rgb_t, global write_only uint8_t* grayscale, const image_kernel_info src, const image_kernel_info dst)
+kernel void kernel_main(const global read_only uint8_t* rgb_t, global write_only uint8_t* grayscale, const read_only image_kernel_info src, const read_only image_kernel_info dst)
 {
     uint32_t x = get_global_id(0);
     uint32_t y = get_global_id(1);
