@@ -147,6 +147,7 @@
     <ClInclude Include="..\include\opencl\opencl_kernel.h" />
     <ClInclude Include="..\include\opencl\opencl_platform.h" />
     <ClInclude Include="..\include\opencl\opencl_program.h" />
+    <ClInclude Include="..\include\opencl\opencl_program_helpers.h" />
     <ClInclude Include="..\include\os\windows\com_error.h" />
     <ClInclude Include="..\include\os\windows\com_initializer.h" />
     <ClInclude Include="..\include\os\windows\com_pointers.h" />
