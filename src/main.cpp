@@ -16,6 +16,7 @@
 #include <opencl/opencl_buffer.h>
 
 #include "opencl/opencl_grayscale.h"
+#include "opencl/opencl_canny.h"
 #include "opencl/opencl_imaging_cpp.h"
 
 #include "freeform_grayscale.h"
@@ -48,8 +49,9 @@ int32_t main( int argc, char const* argv[] )
     auto pixels      = texture.get_pixels();
     auto pixels_cpu1 = pixels.get_pixels_cpu();
 
-    auto color = freeform::create_color_texture(ctx.get(), texture);
-    auto grayscale = freeform::create_grayscale_texture( ctx.get(), queue.get(), color );
+    auto color      = freeform::create_color_texture(ctx.get(), texture);
+    auto grayscale  = freeform::create_grayscale_texture( ctx.get(), queue.get(), color );
+    auto canny      = freeform::create_canny_texture(ctx.get(), queue.get(), grayscale, 0.5f);
     
     auto pixels1     = grayscale.get_pixels(queue.get());
     auto pixels_cpu2 = pixels1.get_pixels_cpu();

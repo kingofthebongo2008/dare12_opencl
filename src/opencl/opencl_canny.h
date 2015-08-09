@@ -12,15 +12,15 @@ namespace freeform
 {
     namespace details
     {
-        #include "opencl_grayscale_compiled.h"
+        #include "opencl_canny_compiled.h"
 
-        inline std::tuple<const uint8_t*, size_t> get_grayscale_ir(void)
+        inline std::tuple<const uint8_t*, size_t> get_canny_ir(void)
         {
-            return std::make_tuple(reinterpret_cast<const uint8_t*> (&opencl_grayscale[0]), sizeof(opencl_grayscale) );
+            return std::make_tuple(reinterpret_cast<const uint8_t*> (&opencl_canny[0]), sizeof(opencl_canny) );
         }
 
 
-        inline cl_program create_grayscale_kernel( cl_context context, cl_device_id device )
+        inline cl_program create_canny_kernel( cl_context context, cl_device_id device )
         {
             cl_int binary_status = 0;
             cl_int errcode_ret = 0;
@@ -30,16 +30,16 @@ namespace freeform
             auto code = std::get<0 >(binary);
 
             auto program = clCreateProgramWithBinary(context, 1, &device, &length, &code, &binary_status, &errcode_ret);
-          
+           
             opencl::throw_if_failed(errcode_ret);
             opencl::throw_if_failed(clBuildProgram(  program, 1, &device, nullptr, nullptr, nullptr ) );
             return program;
         }
     }
 
-    inline std::unique_ptr< opencl::program>  create_grayscale_kernel(const opencl::context * ctx )
+    inline std::unique_ptr< opencl::program>  create_canny_kernel(const opencl::context * ctx )
     {
-        auto program = details::create_grayscale_kernel(*ctx, ctx->get_device());
+        auto program = details::create_canny_kernel(*ctx, ctx->get_device());
         return std::make_unique< opencl::program > (  program, false  );
     }
 }

@@ -161,6 +161,7 @@
     <ClInclude Include="..\src\imaging\imaging_utils_base.h" />
     <ClInclude Include="..\src\imaging\imaging_utils_cpu.h" />
     <ClInclude Include="..\src\imaging\imaging_utils_opencl.h" />
+    <ClInclude Include="..\src\opencl\opencl_canny.h" />
     <ClInclude Include="..\src\opencl\opencl_grayscale.h" />
     <ClInclude Include="..\src\opencl\opencl_image_kernel_info.h" />
     <ClInclude Include="..\src\opencl\opencl_imaging.h" />
@@ -280,7 +281,6 @@
       <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</SPIR32>
       <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</SPIR32>
     </Intel_OpenCL_Build_Rules>
-
     <Intel_OpenCL_Build_Rules Include="..\src\opencl\opencl_canny.cl">
       <FileType>Document</FileType>
       <AdditionalDependencies>$(ProjectDir)..\src\opencl\opencl_stdint.h;$(ProjectDir)..\src\opencl\opencl_imaging.h;$(ProjectDir)..\src\opencl\opencl_image_kernel_info.h</AdditionalDependencies>
@@ -291,7 +291,6 @@
       <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</SPIR32>
       <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</SPIR32>
     </Intel_OpenCL_Build_Rules>
-
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

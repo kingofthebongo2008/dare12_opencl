@@ -12,12 +12,12 @@ namespace freeform
 {
     inline imaging::opencl_texture create_canny_texture(opencl::context* ctx, opencl::command_queue* queue,  const imaging::opencl_texture& grayscale, float threshold )
     {
-        /*
         using namespace opencl;
         using namespace imaging;
 
-        auto program    = create_grayscale_kernel(ctx);
+        auto program    = create_canny_kernel(ctx);
         auto kernel     = program->create_kernel("kernel_main");
+        /*
         auto width      = color.get_width();
         auto height     = color.get_height();
 
