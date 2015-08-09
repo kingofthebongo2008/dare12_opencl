@@ -103,7 +103,6 @@
     <Text Include="readMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\freeform_grayscale.cpp" />
     <ClCompile Include="..\src\precompiled.cpp" />
     <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
@@ -154,6 +153,7 @@
     <ClInclude Include="..\include\os\windows\com_ptr.h" />
     <ClInclude Include="..\include\os\windows\dxgi_pointers.h" />
     <ClInclude Include="..\include\os\windows\wnd_application.h" />
+    <ClInclude Include="..\src\freeform_canny.h" />
     <ClInclude Include="..\src\freeform_grayscale.h" />
     <ClInclude Include="..\src\imaging\imaging.h" />
     <ClInclude Include="..\src\imaging\imaging_opencl.h" />
@@ -270,7 +270,6 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\opencl\opencl_stdint.h" />
     <Intel_OpenCL_Build_Rules Include="..\src\opencl\opencl_grayscale.cl">
       <FileType>Document</FileType>
       <AdditionalDependencies>$(ProjectDir)..\src\opencl\opencl_stdint.h;$(ProjectDir)..\src\opencl\opencl_imaging.h;$(ProjectDir)..\src\opencl\opencl_image_kernel_info.h</AdditionalDependencies>
@@ -281,6 +280,18 @@
       <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</SPIR32>
       <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</SPIR32>
     </Intel_OpenCL_Build_Rules>
+
+    <Intel_OpenCL_Build_Rules Include="..\src\opencl\opencl_canny.cl">
+      <FileType>Document</FileType>
+      <AdditionalDependencies>$(ProjectDir)..\src\opencl\opencl_stdint.h;$(ProjectDir)..\src\opencl\opencl_imaging.h;$(ProjectDir)..\src\opencl\opencl_image_kernel_info.h</AdditionalDependencies>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</Device>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</SPIR32>
+    </Intel_OpenCL_Build_Rules>
+
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

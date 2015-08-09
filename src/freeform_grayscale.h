@@ -9,8 +9,6 @@
 #include "imaging/imaging_utils.h"
 #include "imaging/imaging_opencl.h"
 
-
-
 namespace freeform
 {
     inline imaging::opencl_texture create_color_texture ( opencl::context* ctx, const imaging::cpu_texture& texture )
@@ -48,8 +46,6 @@ namespace freeform
         queue->launch2d(kernel.get(), width, height);
         queue->synchronize();
         
-
         return std::move(grayscale);
     }
-
 }

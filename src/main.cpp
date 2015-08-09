@@ -19,6 +19,8 @@
 #include "opencl/opencl_imaging_cpp.h"
 
 #include "freeform_grayscale.h"
+#include "freeform_canny.h"
+
 
 int32_t main( int argc, char const* argv[] )
 {
