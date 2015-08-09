@@ -37,7 +37,8 @@ int32_t main( int argc, char const* argv[] )
     auto url2 = fs::build_media_url(source, L"basic2_obstacles_grayscale.png");
     auto url3 = fs::build_media_url(source, L"basic2_obstacles_canny.png");
 
-    auto url  = fs::build_media_url(source, L"temp.png");
+    auto url   = fs::build_media_url(source, L"temp.png");
+    auto url_1 = fs::build_media_url(source, L"temp1.png");
 
     auto d          = create_device(opencl::gpu, opencl::amd);
     auto ctx        = d->create_context();
@@ -57,6 +58,7 @@ int32_t main( int argc, char const* argv[] )
     auto pixels_cpu2 = pixels1.get_pixels_cpu();
 
     imaging::write_texture( grayscale, url.get_path(), queue.get() );
+    imaging::write_texture( canny, url_1.get_path(), queue.get());
        
 
     return 0;

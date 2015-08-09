@@ -17,20 +17,20 @@ namespace freeform
 
         auto program    = create_canny_kernel(ctx);
         auto kernel     = program->create_kernel("kernel_main");
-        /*
-        auto width      = color.get_width();
-        auto height     = color.get_height();
+        
+        auto width      = grayscale.get_width();
+        auto height     = grayscale.get_height();
 
-        auto grayscale = create_opencl_texture<image_type::grayscale>(ctx, width, height );
+        auto grayscale_canny = create_opencl_texture<image_type::grayscale>(ctx, width, height );
 
-        kernel->set_argument(0, (cl_mem) color.get_storage() );
-        kernel->set_argument(1, (cl_mem) grayscale.get_storage() );
-        kernel->set_argument(2, create_image_kernel_info(color) );
-        kernel->set_argument(3, create_image_kernel_info(grayscale) );
+        kernel->set_argument(0, (cl_mem) grayscale.get_storage() );
+        kernel->set_argument(1, (cl_mem) grayscale_canny.get_storage() );
+        kernel->set_argument(2, create_image_kernel_info(grayscale) );
+        kernel->set_argument(3, create_image_kernel_info(grayscale_canny) );
 
         queue->launch2d(kernel.get(), width, height);
         queue->synchronize();
-        */
-        return std::move(grayscale);
+        
+        return std::move(grayscale_canny);
     }
 }

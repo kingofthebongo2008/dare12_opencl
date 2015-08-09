@@ -25,7 +25,7 @@ namespace freeform
             cl_int binary_status = 0;
             cl_int errcode_ret = 0;
 
-            auto binary = details::get_grayscale_ir();
+            auto binary = details::get_canny_ir();
             auto length = std::get<1>(binary);
             auto code = std::get<0 >(binary);
 
