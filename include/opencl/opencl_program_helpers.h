@@ -13,7 +13,7 @@
 
 namespace opencl
 {
-    inline inline cl_program create_program(cl_context context, cl_device_id device, const uint8_t* code, size_t code_size)
+    inline cl_program create_program(cl_context context, cl_device_id device, const uint8_t* code, size_t code_size)
     {
         cl_int binary_status = 0;
         cl_int errcode_ret = 0;

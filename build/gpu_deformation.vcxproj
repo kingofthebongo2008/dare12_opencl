@@ -167,6 +167,9 @@
     <ClInclude Include="..\src\opencl\opencl_image_kernel_info.h" />
     <ClInclude Include="..\src\opencl\opencl_imaging.h" />
     <ClInclude Include="..\src\opencl\opencl_imaging_cpp.h" />
+    <ClInclude Include="..\src\opencl\opencl_math_functions.h" />
+    <ClInclude Include="..\src\opencl\opencl_math_vector.h" />
+    <ClInclude Include="..\src\opencl\opencl_spir.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\include\gx\shaders\gx_shader_copy_texture_ps.hlsl">
@@ -283,6 +286,16 @@
       <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</SPIR32>
     </Intel_OpenCL_Build_Rules>
     <Intel_OpenCL_Build_Rules Include="..\src\opencl\opencl_canny.cl">
+      <FileType>Document</FileType>
+      <AdditionalDependencies>$(ProjectDir)..\src\opencl\opencl_stdint.h;$(ProjectDir)..\src\opencl\opencl_imaging.h;$(ProjectDir)..\src\opencl\opencl_image_kernel_info.h</AdditionalDependencies>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</Device>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</SPIR32>
+    </Intel_OpenCL_Build_Rules>
+    <Intel_OpenCL_Build_Rules Include="..\src\opencl\opencl_test.cl">
       <FileType>Document</FileType>
       <AdditionalDependencies>$(ProjectDir)..\src\opencl\opencl_stdint.h;$(ProjectDir)..\src\opencl\opencl_imaging.h;$(ProjectDir)..\src\opencl\opencl_image_kernel_info.h</AdditionalDependencies>
       <Include Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)..\src\opencl</Include>
