@@ -30,6 +30,7 @@
 namespace freeform
 {
     void display(const imaging::opencl_texture& t, const opencl::command_queue* queue, const samples& p);
+    void display(const imaging::opencl_texture& t, const opencl::command_queue* queue, const patches& p);
 }
 
 
@@ -80,7 +81,7 @@ int32_t main( int argc, char const* argv[] )
 
     auto init = freeform::initialize_freeform(&ff_ctx, center_image_x, center_image_y, radius, patch_count);
 
-    freeform::display(grayscale, queue.get(), std::get<0>(init));
+    freeform::display(grayscale, queue.get(), std::get<1>(init));
 
 
     

@@ -2,9 +2,10 @@
 
 #include "opencl_freeform_struct.h"
 #include "opencl_freeform_generate.h"
+#include "opencl_freeform_patch.h"
 
 
-kernel void kernel_main(global write_only freeform_sample* samples, const read_only generate_sample gen)
+kernel void kernel_main(global write_only freeform_sample* samples, global write_only freeform_patch* patches, const read_only generate_sample gen)
 {
     uint32_t i = get_global_id(0);
 
@@ -18,9 +19,12 @@ kernel void kernel_main(global write_only freeform_sample* samples, const read_o
     float y2 = sample_y(3 * i, 2, &gen);
     float y3 = sample_y(3 * i, 3, &gen);
 
-    freeform_sample p0 = sample(i, &gen);
+    freeform_sample s = sample(i, &gen);
 
-    samples[i] = p0;
+    freeform_patch  p = interpolate_curve(s);
+
+    samples[i] = s;
+    patches[i] = p;
 }
 
 

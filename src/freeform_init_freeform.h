@@ -48,7 +48,8 @@ namespace freeform
         auto kernel     = program->create_kernel("kernel_main");
 
         kernel->set_argument(0, n.getBuffer() );
-        kernel->set_argument(1, params );
+        kernel->set_argument(1, np.getBuffer() );
+        kernel->set_argument(2, params );
 
         ctx->get_queue()->launch1d(kernel.get(), iterations / 3);
         ctx->get_queue()->synchronize();
