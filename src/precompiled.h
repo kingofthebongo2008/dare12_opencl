@@ -19,6 +19,8 @@
 
 #include "targetver.h"
 
+#include <bolt/cl/bolt.h>
+
 #endif
 
 

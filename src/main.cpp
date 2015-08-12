@@ -1,5 +1,7 @@
 #include "precompiled.h"
 
+#include <bolt/cl/device_vector.h>
+
 #include <cstdint>
 #include <memory>
 
@@ -59,6 +61,12 @@ int32_t main( int argc, char const* argv[] )
 
     imaging::write_texture( grayscale, url.get_path(), queue.get() );
     imaging::write_texture( canny, url_1.get_path(), queue.get());
+
+    cl::CommandQueue q(*queue, true);
+
+    bolt::cl::control c(q);
+
+    bolt::cl::device_vector<uint32_t> v(c);
        
 
     return 0;

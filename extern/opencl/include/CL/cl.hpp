@@ -1664,6 +1664,11 @@ public:
 
     Wrapper(const cl_type &obj) : object_(obj) { }
 
+    Wrapper(const cl_type &obj, bool retain_object) : object_(obj)
+    {
+        if (object_ != NULL) { detail::errHandler(retain(), __RETAIN_ERR); }
+    }
+
     ~Wrapper()
     {
         if (object_ != NULL) { release(); }
@@ -5082,6 +5087,8 @@ public:
     CommandQueue(const CommandQueue& commandQueue) : detail::Wrapper<cl_type>(commandQueue) { }
 
     CommandQueue(const cl_command_queue& commandQueue) : detail::Wrapper<cl_type>(commandQueue) { }
+
+    CommandQueue(const cl_command_queue& commandQueue, bool retain_object) : detail::Wrapper<cl_type>(commandQueue, retain_object) { }
 
     CommandQueue& operator = (const CommandQueue& rhs)
     {
