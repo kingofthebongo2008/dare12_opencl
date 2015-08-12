@@ -37,10 +37,10 @@ int32_t main( int argc, char const* argv[] )
 
     using namespace opencl;
 
-    auto url0 = fs::build_media_url(source, L"basic2_obstacles.png");
-    auto url1 = fs::build_media_url(source, L"basic1_obstacles.png");
-    auto url2 = fs::build_media_url(source, L"basic2_obstacles_grayscale.png");
-    auto url3 = fs::build_media_url(source, L"basic2_obstacles_canny.png");
+    auto url0 = fs::build_media_url(source, L"essaisynth2.png");
+    auto url1 = fs::build_media_url(source, L"essaisynth1.png");
+    auto url2 = fs::build_media_url(source, L"essaisynth2_grayscale.png");
+    auto url3 = fs::build_media_url(source, L"essaisynth2_canny.png");
 
     auto url   = fs::build_media_url(source, L"temp.png");
     auto url_1 = fs::build_media_url(source, L"temp1.png");

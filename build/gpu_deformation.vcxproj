@@ -189,6 +189,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\precompiled.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\rendering_application.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\d3d11\d3d11_error.h" />
@@ -265,6 +266,9 @@
     <ClInclude Include="..\src\opencl\opencl_math_matrix.h" />
     <ClInclude Include="..\src\opencl\opencl_math_vector.h" />
     <ClInclude Include="..\src\opencl\opencl_spir.h" />
+    <ClInclude Include="..\src\patch_rendering_application.h" />
+    <ClInclude Include="..\src\rendering_application.h" />
+    <ClInclude Include="..\src\sample_rendering_application.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\include\gx\shaders\gx_shader_copy_texture_ps.hlsl">
