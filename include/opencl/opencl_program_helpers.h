@@ -30,7 +30,6 @@ namespace opencl
 
         catch (const opencl::exception& e)
         {
-            clBuildProgram(program, 1, &device, nullptr, nullptr, nullptr);
             char errors[1024];
             size_t size = 0;
             clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, 1024, &errors[0], &size);
