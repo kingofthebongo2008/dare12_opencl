@@ -239,7 +239,10 @@
     <ClInclude Include="..\include\os\windows\dxgi_pointers.h" />
     <ClInclude Include="..\include\os\windows\wnd_application.h" />
     <ClInclude Include="..\src\freeform_canny.h" />
+    <ClInclude Include="..\src\freeform_common.h" />
+    <ClInclude Include="..\src\freeform_context.h" />
     <ClInclude Include="..\src\freeform_grayscale.h" />
+    <ClInclude Include="..\src\freeform_init_freeform.h" />
     <ClInclude Include="..\src\imaging\imaging.h" />
     <ClInclude Include="..\src\imaging\imaging_opencl.h" />
     <ClInclude Include="..\src\imaging\imaging_utils.h" />
@@ -249,6 +252,7 @@
     <ClInclude Include="..\src\opencl\opencl_canny.h" />
     <ClInclude Include="..\src\opencl\opencl_collision_detection.h" />
     <ClInclude Include="..\src\opencl\opencl_freeform_patch.h" />
+    <ClInclude Include="..\src\opencl\opencl_freeform_struct.h" />
     <ClInclude Include="..\src\opencl\opencl_grayscale.h" />
     <ClInclude Include="..\src\opencl\opencl_image_kernel_info.h" />
     <ClInclude Include="..\src\opencl\opencl_imaging.h" />

@@ -24,6 +24,9 @@
 #include "freeform_grayscale.h"
 #include "freeform_canny.h"
 
+#include "freeform_init_freeform.h"
+#include "freeform_context.h"
+
 
 int32_t main( int argc, char const* argv[] )
 {
@@ -46,7 +49,6 @@ int32_t main( int argc, char const* argv[] )
     auto ctx        = d->create_context();
     auto queue      = ctx->create_command_queue();
 
-
     //read the png texture
     auto texture     = imaging::read_texture(url0.get_path());
     auto pixels      = texture.get_pixels();
@@ -62,15 +64,20 @@ int32_t main( int argc, char const* argv[] )
     imaging::write_texture( grayscale, url.get_path(), queue.get() );
     imaging::write_texture( canny, url_1.get_path(), queue.get());
 
-    cl::CommandQueue q(*queue, true);
+    freeform::context  ff_ctx(ctx.get(), queue.get());
 
-    bolt::cl::control c(q);
+    auto center_image_x = 0.5f;// 341.0f / gray.get_width();
+    auto center_image_y = 0.5f;// 240.0f / gray.get_height();
 
-    bolt::cl::device_vector<uint32_t> v(c);
-       
+    auto pixel_size = std::max(1.0f / grayscale.get_width(), 1.0f / grayscale.get_height());
+    auto radius = 20.0f * pixel_size;
+    auto patch_count = 20;
 
+    auto init = freeform::initialize_freeform(&ff_ctx, center_image_x, center_image_y, radius, patch_count);
+
+
+    
     return 0;
-
 }
 
 
