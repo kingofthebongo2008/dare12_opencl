@@ -40,5 +40,10 @@ namespace freeform
                 return m_command_queue;
             }
 
+            opencl::context*       get_context() const
+            {
+                return m_context;
+            }
+
     };
 }

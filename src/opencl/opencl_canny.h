@@ -19,8 +19,7 @@ namespace freeform
             return std::make_tuple(reinterpret_cast<const uint8_t*> (&opencl_canny[0]), sizeof(opencl_canny) );
         }
 
-
-        inline cl_program create_canny_kernel( cl_context context, cl_device_id device )
+        inline cl_program create_canny_kernel(cl_context context, cl_device_id device)
         {
             cl_int binary_status = 0;
             cl_int errcode_ret = 0;
@@ -29,11 +28,7 @@ namespace freeform
             auto length = std::get<1>(binary);
             auto code = std::get<0 >(binary);
 
-            auto program = clCreateProgramWithBinary(context, 1, &device, &length, &code, &binary_status, &errcode_ret);
-           
-            opencl::throw_if_failed(errcode_ret);
-            opencl::throw_if_failed(clBuildProgram(  program, 1, &device, nullptr, nullptr, nullptr ) );
-            return program;
+            return opencl::create_program(context, device, code, length);
         }
     }
 
