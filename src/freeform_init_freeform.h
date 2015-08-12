@@ -53,8 +53,6 @@ namespace freeform
         ctx->get_queue()->launch1d(kernel.get(), iterations / 3);
         ctx->get_queue()->synchronize();
 
-        freeform_sample s = n[iterations / 3 - 1 ];
-
         //auto begin = bolt::cl::make_counting_iterator(0);
         //auto end = begin + iterations / 3;
 

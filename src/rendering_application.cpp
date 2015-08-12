@@ -21,7 +21,8 @@ namespace freeform
         di.m_patches.resize( p.size() );
         auto i = 0;
 
-        for (uint32_t i = 0; i < p.size(); ++i )
+        //this is very slow!!! -> maps->reads several bytes -> unmaps
+        for (uint32_t i = 0U; i < p.size(); ++i )
         {
             graphic::patch pt;
 
@@ -37,7 +38,7 @@ namespace freeform
             pt.m_points[2].m_y = p0.y2;
             pt.m_points[3].m_y = p0.y3;
 
-            di.m_patches[i++] = pt;
+            di.m_patches[i] = pt;
         }
 
         return std::move(di);

@@ -27,6 +27,11 @@
 #include "freeform_init_freeform.h"
 #include "freeform_context.h"
 
+namespace freeform
+{
+    void display(const imaging::opencl_texture& t, const opencl::command_queue* queue, const samples& p);
+}
+
 
 int32_t main( int argc, char const* argv[] )
 {
@@ -45,7 +50,7 @@ int32_t main( int argc, char const* argv[] )
     auto url   = fs::build_media_url(source, L"temp.png");
     auto url_1 = fs::build_media_url(source, L"temp1.png");
 
-    auto d          = create_device(opencl::gpu, opencl::amd);
+    auto d          = create_device(opencl::cpu, opencl::intel);
     auto ctx        = d->create_context();
     auto queue      = ctx->create_command_queue();
 
@@ -74,6 +79,8 @@ int32_t main( int argc, char const* argv[] )
     auto patch_count = 20;
 
     auto init = freeform::initialize_freeform(&ff_ctx, center_image_x, center_image_y, radius, patch_count);
+
+    freeform::display(grayscale, queue.get(), std::get<0>(init));
 
 
     
