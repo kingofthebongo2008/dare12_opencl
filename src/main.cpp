@@ -25,6 +25,7 @@
 #include "freeform_canny.h"
 
 #include "freeform_init_freeform.h"
+#include "freeform_split.h"
 #include "freeform_context.h"
 
 namespace freeform
