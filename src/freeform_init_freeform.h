@@ -51,13 +51,8 @@ namespace freeform
         kernel->set_argument(1, np.getBuffer() );
         kernel->set_argument(2, params );
 
-        ctx->get_queue()->launch1d(kernel.get(), iterations / 3);
-        ctx->get_queue()->synchronize();
-
-        //auto begin = bolt::cl::make_counting_iterator(0);
-        //auto end = begin + iterations / 3;
-
-        //bolt::cl::transform(begin, end, n.begin(), generate_sample(static_cast<float> (center_image_x), static_cast<float> (center_image_y), radius, pas_pt_patch));
+        ctx->launch1d( kernel.get(), iterations / 3 );
+        ctx->synchronize();
 
         return std::move(std::make_tuple(std::move(n), std::move(np)));
     }
