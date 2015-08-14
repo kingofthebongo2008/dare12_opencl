@@ -1,6 +1,6 @@
 #include "opencl_stdint.h"
 
-typedef struct _generate_sample
+typedef   struct _generate_sample
 {
     float m_center_x;
     float m_center_y;

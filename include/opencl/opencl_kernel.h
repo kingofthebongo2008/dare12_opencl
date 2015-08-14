@@ -89,7 +89,7 @@ namespace opencl
             details::set_argument(m_kernel, index, size, value);
         }
 
-        template <typename t> void set_argument( uint32_t index, const t& value )
+        template <typename t> void set_argument( uint32_t index, const t value )
         {
             set_argument(index, sizeof(t), &value) ;
         }
