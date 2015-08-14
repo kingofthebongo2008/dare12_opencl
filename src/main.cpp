@@ -52,7 +52,7 @@ int32_t main( int argc, char const* argv[] )
     auto url   = fs::build_media_url(source, L"temp.png");
     auto url_1 = fs::build_media_url(source, L"temp1.png");
 
-    auto d          = create_device(opencl::cpu, opencl::amd);
+    auto d          = create_device(opencl::gpu, opencl::intel);
     auto ctx        = d->create_context();
     auto queue      = ctx->create_command_queue();
 
