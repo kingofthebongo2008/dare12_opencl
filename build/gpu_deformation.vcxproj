@@ -244,6 +244,7 @@
     <ClInclude Include="..\src\freeform_context.h" />
     <ClInclude Include="..\src\freeform_grayscale.h" />
     <ClInclude Include="..\src\freeform_init_freeform.h" />
+    <ClInclude Include="..\src\freeform_print_utils.h" />
     <ClInclude Include="..\src\freeform_split.h" />
     <ClInclude Include="..\src\imaging\imaging.h" />
     <ClInclude Include="..\src\imaging\imaging_opencl.h" />
@@ -268,7 +269,16 @@
     <ClInclude Include="..\src\opencl\opencl_math_functions.h" />
     <ClInclude Include="..\src\opencl\opencl_math_matrix.h" />
     <ClInclude Include="..\src\opencl\opencl_math_vector.h" />
+    <ClInclude Include="..\src\opencl\opencl_radix_sort.h" />
+    <ClInclude Include="..\src\opencl\opencl_radix_sort_block_addition.h" />
+    <ClInclude Include="..\src\opencl\opencl_radix_sort_fix_offset.h" />
+    <ClInclude Include="..\src\opencl\opencl_radix_sort_histogram.h" />
+    <ClInclude Include="..\src\opencl\opencl_radix_sort_permute.h" />
+    <ClInclude Include="..\src\opencl\opencl_radix_sort_prefix_sum.h" />
+    <ClInclude Include="..\src\opencl\opencl_radix_sort_scan_arrays_dim1.h" />
+    <ClInclude Include="..\src\opencl\opencl_radix_sort_scan_arrays_dim2.h" />
     <ClInclude Include="..\src\opencl\opencl_spir.h" />
+    <ClInclude Include="..\src\opencl_sort_by_key.h" />
     <ClInclude Include="..\src\patch_rendering_application.h" />
     <ClInclude Include="..\src\rendering_application.h" />
     <ClInclude Include="..\src\sample_rendering_application.h" />
@@ -529,6 +539,118 @@
     <Intel_OpenCL_Build_Rules Include="..\src\opencl\opencl_freeform_split_eval.cl">
       <FileType>Document</FileType>
       <AdditionalDependencies>$(ProjectDir)..\src\opencl\opencl_stdint.h;$(ProjectDir)..\src\opencl\opencl_imaging.h;$(ProjectDir)..\src\opencl\opencl_image_kernel_info.h</AdditionalDependencies>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(ProjectDir)..\src\opencl</Include>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|x64'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|x64'">1</Device>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|x64'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|x64'">1</SPIR32>
+    </Intel_OpenCL_Build_Rules>
+    <Intel_OpenCL_Build_Rules Include="..\src\opencl\opencl_radix_sort_histogram.cl">
+      <FileType>Document</FileType>
+      <AdditionalDependencies>$(ProjectDir)..\src\opencl\opencl_stdint.h;$(ProjectDir)..\src\opencl\opencl_radix_sort.h</AdditionalDependencies>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(ProjectDir)..\src\opencl</Include>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|x64'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|x64'">1</Device>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|x64'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|x64'">1</SPIR32>
+    </Intel_OpenCL_Build_Rules>
+    <Intel_OpenCL_Build_Rules Include="..\src\opencl\opencl_radix_sort_permute.cl">
+      <FileType>Document</FileType>
+      <AdditionalDependencies>$(ProjectDir)..\src\opencl\opencl_stdint.h;$(ProjectDir)..\src\opencl\opencl_radix_sort.h</AdditionalDependencies>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(ProjectDir)..\src\opencl</Include>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|x64'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|x64'">1</Device>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|x64'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|x64'">1</SPIR32>
+    </Intel_OpenCL_Build_Rules>
+    <Intel_OpenCL_Build_Rules Include="..\src\opencl\opencl_radix_sort_block_addition.cl">
+      <FileType>Document</FileType>
+      <AdditionalDependencies>$(ProjectDir)..\src\opencl\opencl_stdint.h;$(ProjectDir)..\src\opencl\opencl_radix_sort.h</AdditionalDependencies>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(ProjectDir)..\src\opencl</Include>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|x64'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|x64'">1</Device>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|x64'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|x64'">1</SPIR32>
+    </Intel_OpenCL_Build_Rules>
+    <Intel_OpenCL_Build_Rules Include="..\src\opencl\opencl_radix_sort_fix_offset.cl">
+      <FileType>Document</FileType>
+      <AdditionalDependencies>$(ProjectDir)..\src\opencl\opencl_stdint.h;$(ProjectDir)..\src\opencl\opencl_radix_sort.h</AdditionalDependencies>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(ProjectDir)..\src\opencl</Include>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|x64'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|x64'">1</Device>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|x64'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|x64'">1</SPIR32>
+    </Intel_OpenCL_Build_Rules>
+    <Intel_OpenCL_Build_Rules Include="..\src\opencl\opencl_radix_sort_prefix_sum.cl">
+      <FileType>Document</FileType>
+      <AdditionalDependencies>$(ProjectDir)..\src\opencl\opencl_stdint.h;$(ProjectDir)..\src\opencl\opencl_radix_sort.h</AdditionalDependencies>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(ProjectDir)..\src\opencl</Include>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|x64'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|x64'">1</Device>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|x64'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|x64'">1</SPIR32>
+    </Intel_OpenCL_Build_Rules>
+    <Intel_OpenCL_Build_Rules Include="..\src\opencl\opencl_radix_sort_scan_arrays_dim1.cl">
+      <FileType>Document</FileType>
+      <AdditionalDependencies>$(ProjectDir)..\src\opencl\opencl_stdint.h;$(ProjectDir)..\src\opencl\opencl_radix_sort.h</AdditionalDependencies>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(ProjectDir)..\src\opencl</Include>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|x64'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|x64'">1</Device>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|x64'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|x64'">1</SPIR32>
+    </Intel_OpenCL_Build_Rules>
+    <Intel_OpenCL_Build_Rules Include="..\src\opencl\opencl_radix_sort_scan_arrays_dim2.cl">
+      <FileType>Document</FileType>
+      <AdditionalDependencies>$(ProjectDir)..\src\opencl\opencl_stdint.h;$(ProjectDir)..\src\opencl\opencl_radix_sort.h</AdditionalDependencies>
       <Include Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)..\src\opencl</Include>
       <Include Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(ProjectDir)..\src\opencl</Include>
       <Include Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)..\src\opencl</Include>

@@ -35,6 +35,11 @@ namespace freeform
                 return m_control;
             }
 
+            bolt::cl::control& get_control()
+            {
+                return m_control;
+            }
+
             opencl::command_queue* get_queue() const
             {
                 return m_command_queue;

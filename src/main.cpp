@@ -28,6 +28,8 @@
 #include "freeform_split.h"
 #include "freeform_context.h"
 
+#include "opencl_sort_by_key.h"
+
 namespace freeform
 {
     void display(const imaging::opencl_texture& t, const opencl::command_queue* queue, const samples& p);
