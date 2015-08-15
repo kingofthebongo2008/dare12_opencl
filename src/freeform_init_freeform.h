@@ -55,12 +55,6 @@ namespace freeform
         ctx->launch1d( kernel.get(), iterations / 3 );
         ctx->synchronize();
 
-        freeform_patch p0 = p[0];
-        freeform_sample s0 = s[0];
-
-        auto a = sizeof(freeform_patch);
-        auto b = sizeof(freeform_sample);
-
         return std::move(std::make_tuple(std::move(s), std::move(p)));
     }
 }
