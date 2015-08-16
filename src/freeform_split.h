@@ -14,6 +14,8 @@
 
 #include "freeform_print_utils.h"
 
+#include "freeform_sort_by_key.h"
+
 
 namespace freeform
 {
@@ -49,9 +51,9 @@ namespace freeform
         n.resize(new_size);
         keys.resize(new_size);
 
-        int keysa[8] = { 2, 9, 3, 7, 5, 6, 3, 8 };
-        int valuesa[8] = { 100, 200, 16, 50, 15, 8, 3, 5 };
         
+        auto t = freeform::sort_by_key(ctx, n, keys);
+       
         //bolt::cl::sort_by_key(ctx->get_control(), keysa, keysa + 8, valuesa, bolt::cl::less<int>());
 
 

@@ -55,6 +55,11 @@ namespace freeform
                 get_queue()->launch1d( kernel, x );
             }
 
+            void launch1d(const opencl::kernel* kernel, uint32_t x, uint32_t local_x) const
+            {
+                get_queue()->launch1d(kernel, x, local_x);
+            }
+
             void launch2d(const opencl::kernel* kernel, uint32_t x, uint32_t y) const
             {
                 get_queue()->launch2d( kernel, x, y );

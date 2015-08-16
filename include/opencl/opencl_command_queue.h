@@ -64,6 +64,13 @@ namespace opencl
             throw_if_failed(clEnqueueNDRangeKernel(queue, kernel, 1, nullptr, &global_work_size[0], nullptr, 0, nullptr, nullptr));
         }
 
+        inline void launch1d(cl_command_queue queue, cl_kernel kernel, uint32_t x, uint32_t local_x )
+        {
+            size_t global_work_size[1] = { x };
+            size_t local_work_size[1] = { local_x };
+            throw_if_failed(clEnqueueNDRangeKernel(queue, kernel, 1, nullptr, &global_work_size[0], &local_work_size[0], 0, nullptr, nullptr));
+        }
+
         inline void synchronize(cl_command_queue queue)
         {
             throw_if_failed(clFinish(queue));
@@ -156,6 +163,11 @@ namespace opencl
         void launch1d( const kernel* kernel, uint32_t x )
         {
             details::launch1d(m_command_queue, *kernel, x);
+        }
+
+        void launch1d(const kernel* kernel, uint32_t x, uint32_t local_x)
+        {
+            details::launch1d(m_command_queue, *kernel, x, local_x);
         }
 
         void launch2d(const kernel* kernel, uint32_t x, uint32_t y)
