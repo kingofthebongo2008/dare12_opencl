@@ -12,6 +12,7 @@
 
 #include "opencl/opencl_freeform_deform_normal_curve_points.h"
 #include "opencl/opencl_freeform_deform_scatter_normals.h"
+#include "opencl/opencl_freeform_deform_scatter_points.h"
 
 
 
