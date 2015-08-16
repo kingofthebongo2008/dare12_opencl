@@ -58,6 +58,9 @@ void kernel_main(global read_write uint32_t * theArray, global read_write freefo
     
     uint32_t leftElement = theArray[leftId];
     uint32_t rightElement = theArray[rightId];
+
+    freeform_patch  left_value   = values[leftId];
+    freeform_patch  right_value  = values[rightId];
     
     uint32_t sameDirectionBlockWidth = 1 << stage;
     
@@ -66,25 +69,40 @@ void kernel_main(global read_write uint32_t * theArray, global read_write freefo
 
     uint32_t greater;
     uint32_t lesser;
-    if(leftElement > rightElement)
+    freeform_patch  greater_value;
+    freeform_patch  lesser_value;
+
+    if( leftElement > rightElement )
     {
         greater = leftElement;
         lesser  = rightElement;
+
+        greater_value = left_value;
+        lesser_value  = right_value;
     }
     else
     {
-        greater = rightElement;
-        lesser  = leftElement;
+        greater         = rightElement;
+        lesser          = leftElement;
+
+        lesser_value    = left_value;
+        greater_value   = right_value;
     }
     
     if(sortIncreasing)
     {
         theArray[leftId]  = lesser;
         theArray[rightId] = greater;
+
+        values[leftId] = lesser_value;
+        values[rightId] = greater_value;
     }
     else
     {
-        theArray[leftId]  = greater;
-        theArray[rightId] = lesser;
+        theArray[leftId]    = greater;
+        theArray[rightId]   = lesser;
+
+        values[leftId]      = greater_value;
+        values[rightId]     = lesser_value;
     }
 }

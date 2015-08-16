@@ -72,16 +72,8 @@ namespace freeform
         auto s = p.size();
 
         //todo: does a copy, change the vector class
-
         p.resize( details::get_next_power_of_2(s), details::invalid_patch() );
         keys.resize(details::get_next_power_of_2(s), details::invalid_key());
-
-        cl_int status;
-        cl_uint numStages = 0;
-        cl_uint temp;
-
-        cl_uint stage;
-        cl_uint passOfStage;
 
         size_t global_threads    = keys.size() / 2;
         size_t local_threads     = 256;
@@ -95,9 +87,6 @@ namespace freeform
         kernel->set_argument(4, 1U);
 
         auto stages = details::get_power_of_2(details::get_next_power_of_2(s));
-
-
-        print(keys);
 
         for (auto stage = 0; stage < stages; ++stage)
         {
@@ -117,34 +106,6 @@ namespace freeform
         //todo: does a copy, change the vector class
         keys.resize(s);
         p.resize(s);
-
-        std::cout << std::endl;
-        print(keys);
-
-
-        /*
-        kernel->set_argument(0, p.getBuffer() );
-        kernel->set_argument(1, n.getBuffer() );
-        kernel->set_argument(2, keys.getBuffer() );
-        kernel->set_argument(3, element_count.getBuffer());
-        kernel->set_argument(4, pixel_size * 64.0f );
-
-        ctx->launch1d(kernel.get(), s);
-        ctx->synchronize();
-
-        auto new_size = element_count[0];
-
-        n.resize(new_size);
-        keys.resize(new_size);
-
-       
-        //bolt::cl::sort_by_key(ctx->get_control(), keysa, keysa + 8, valuesa, bolt::cl::less<int>());
-        */
-
-        p.resize(s);
-        keys.resize(s);
-
-        ctx->synchronize();
 
         return std::move(p);
     }
