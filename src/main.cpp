@@ -27,6 +27,7 @@
 #include "freeform_init_freeform.h"
 #include "freeform_split.h"
 #include "freeform_context.h"
+#include "freeform_converged.h"
 
 #include "opencl_sort_by_key.h"
 
@@ -84,6 +85,19 @@ int32_t main( int argc, char const* argv[] )
     
     auto init  = freeform::initialize_freeform(&ff_ctx, center_image_x, center_image_y, radius, patch_count);
     auto split = freeform::split(&ff_ctx, std::get<1>(init), pixel_size );
+
+    bolt::cl::device_vector<uint32_t> t(ff_ctx.get_control());
+
+    auto size = 16385;
+    t.resize(size);
+    for (auto i = 0U; i < size; i++)
+    {
+        t[i] = 1;
+    }
+
+    work_group_size s = d->get_max_work_group_size();
+
+    auto test = freeform::converged(&ff_ctx, t);
 
     freeform::display(grayscale, queue.get(), std::get<1>(init));
 

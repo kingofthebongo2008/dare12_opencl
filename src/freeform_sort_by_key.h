@@ -9,7 +9,6 @@
 #include "freeform_context.h"
 
 #include "opencl/opencl_freeform_bitonic_sort_by_key.h"
-
 #include "freeform_print_utils.h"
 
 

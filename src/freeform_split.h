@@ -46,18 +46,17 @@ namespace freeform
         ctx->launch1d(kernel.get(), s);
         ctx->synchronize();
 
+        //read back and resize
         auto new_size = element_count[0];
 
+        //todo: save one resize, since sort_by_key resizes also
         n.resize(new_size);
         keys.resize(new_size);
 
-        
         auto t = freeform::sort_by_key(ctx, n, keys);
-       
-        //bolt::cl::sort_by_key(ctx->get_control(), keysa, keysa + 8, valuesa, bolt::cl::less<int>());
 
 
-        ctx->synchronize();
+        
 
         return std::move(n);
     }

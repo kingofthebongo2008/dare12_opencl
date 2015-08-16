@@ -11,6 +11,13 @@
 
 namespace opencl
 {
+    struct work_group_size
+    {
+        size_t m_x;
+        size_t m_y;
+        size_t m_z;
+    };
+
     namespace details
     {
         inline std::unique_ptr<context> create_context(cl_device_id id)
@@ -24,6 +31,14 @@ namespace opencl
             auto         r = std::make_unique<context>(ctx, false);
 
             return std::move(r);
+        }
+
+        inline work_group_size get_max_work_group_size(cl_device_id device)
+        {
+            work_group_size s;
+            size_t          real_size;
+            throw_if_failed(clGetDeviceInfo(device, CL_DEVICE_MAX_WORK_ITEM_SIZES, sizeof(s), &s, &real_size));
+            return s;
         }
     }
 
@@ -94,6 +109,11 @@ namespace opencl
         inline std::unique_ptr<context> create_context()
         {
             return details::create_context(m_device);
+        }
+
+        work_group_size get_max_work_group_size() const
+        {
+            return details::get_max_work_group_size(m_device);
         }
 
         private:
