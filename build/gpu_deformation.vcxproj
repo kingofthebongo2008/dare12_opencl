@@ -243,6 +243,7 @@
     <ClInclude Include="..\src\freeform_common.h" />
     <ClInclude Include="..\src\freeform_context.h" />
     <ClInclude Include="..\src\freeform_converged.h" />
+    <ClInclude Include="..\src\freeform_deform.h" />
     <ClInclude Include="..\src\freeform_grayscale.h" />
     <ClInclude Include="..\src\freeform_init_freeform.h" />
     <ClInclude Include="..\src\freeform_print_utils.h" />
@@ -257,6 +258,7 @@
     <ClInclude Include="..\src\opencl\opencl_canny.h" />
     <ClInclude Include="..\src\opencl\opencl_collision_detection.h" />
     <ClInclude Include="..\src\opencl\opencl_freeform_bitonic_sort_by_key.h" />
+    <ClInclude Include="..\src\opencl\opencl_freeform_deform_normal_curve_points.h" />
     <ClInclude Include="..\src\opencl\opencl_freeform_generate.h" />
     <ClInclude Include="..\src\opencl\opencl_freeform_generate_sample.h" />
     <ClInclude Include="..\src\opencl\opencl_freeform_generate_struct.h" />
@@ -700,6 +702,24 @@
       <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</SPIR32>
       <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|x64'">1</SPIR32>
     </Intel_OpenCL_Build_Rules>
+
+    <Intel_OpenCL_Build_Rules Include="..\src\opencl\opencl_freeform_deform_normal_curve_points.cl">
+      <FileType>Document</FileType>
+      <AdditionalDependencies>$(ProjectDir)..\src\opencl\opencl_stdint.h;$(ProjectDir)..\src\opencl\opencl_radix_sort.h</AdditionalDependencies>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectDir)..\src\opencl</Include>
+      <Include Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(ProjectDir)..\src\opencl</Include>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='release|x64'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</Device>
+      <Device Condition="'$(Configuration)|$(Platform)'=='debug|x64'">1</Device>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='debug|x64'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|Win32'">1</SPIR32>
+      <SPIR32 Condition="'$(Configuration)|$(Platform)'=='release|x64'">1</SPIR32>
+    </Intel_OpenCL_Build_Rules>
+
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
