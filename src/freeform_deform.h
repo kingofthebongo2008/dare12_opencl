@@ -15,6 +15,7 @@
 #include "opencl/opencl_freeform_deform_scatter_points.h"
 #include "opencl/opencl_freeform_deform_average_samples.h"
 #include "opencl/opencl_freeform_deform_deform_points.h"
+#include "opencl/opencl_freeform_deform_gather_samples.h"
 
 
 
@@ -131,19 +132,40 @@ namespace freeform
 
     }
 
+    inline patches deform_gather_samples(freeform::context* ctx, const points& points, const patches& patches_in)
+    {
+        patches p(ctx->get_control());
+
+        auto s = patches_in.size();
+        p.resize(s);
+
+        auto program = create_freeform_deform_gather_samples_kernel(ctx->get_context());
+        auto kernel = program->create_kernel("kernel_main");
+
+        kernel->set_argument(0, points.getBuffer());
+        kernel->set_argument(1, patches_in.getBuffer());
+        kernel->set_argument(2, p.getBuffer());
+
+        ctx->launch1d(kernel.get(), s);
+        ctx->synchronize();
+
+        return std::move(p);
+
+    }
+
     inline std::tuple< patches, stops> deform(freeform::context* ctx, const patches& p, const imaging::opencl_texture& edges)
     {
         stops    stop(ctx->get_control());
-        patches  r(ctx->get_control());
 
         //get normals that we want to transfer along
         auto    s = deform_normal_curve_points(ctx, p);
-        auto    normal_vectors = deform_scatter_normals(ctx, s);
-        auto    pts            = deform_scatter_points(ctx, p);
-        auto    deformed       = deform_deform_points(ctx, pts, normal_vectors, edges);
-        auto    averaged       = deform_average_samples(ctx, std::get<0>(deformed));
+        auto    normal_vectors      = deform_scatter_normals(ctx, s);
+        auto    pts                 = deform_scatter_points(ctx, p);
+        auto    deformed            = deform_deform_points(ctx, pts, normal_vectors, edges);
+        auto    averaged            = deform_average_samples(ctx, std::get<0>(deformed));
+        auto    deformed_patches    = deform_gather_samples(ctx, averaged, p);
 
     
-        return std::make_tuple( std::move(r), std::move(stop) );
+        return std::make_tuple(std::move(deformed_patches), std::move(stop));
     }
 }
