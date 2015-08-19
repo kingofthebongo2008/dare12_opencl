@@ -25,10 +25,33 @@ namespace freeform
 
     }
 
-    inline std::tuple< patches , bolt::cl::device_vector<uint32_t> > converged( freeform::context* ctx, const patches& p)
+    inline samples deform_normal_curve_points(freeform::context* ctx, const patches& p)
+    {
+        samples                            s( ctx->get_control() ) ;
+
+        s.resize(p.size());
+
+        auto program = create_freeform_deform_normal_curve_points_kernel(ctx->get_context());
+        auto kernel  = program->create_kernel("kernel_main");
+
+
+        kernel->set_argument(0, p.getBuffer());
+        kernel->set_argument(1, s.getBuffer());
+
+        ctx->launch1d(kernel.get(), p.size());
+        ctx->synchronize();
+        return std::move(s);
+    }
+
+    inline std::tuple< patches , bolt::cl::device_vector<uint32_t> > deform( freeform::context* ctx, const patches& p)
     {
         bolt::cl::device_vector<uint32_t> stop(ctx->get_control());
         patches                           r(ctx->get_control());
+
+
+        auto    s = deform_normal_curve_points(ctx, p);
+
+
 
 
     

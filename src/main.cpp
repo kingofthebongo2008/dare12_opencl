@@ -86,19 +86,11 @@ int32_t main( int argc, char const* argv[] )
     
     auto init  = freeform::initialize_freeform(&ff_ctx, center_image_x, center_image_y, radius, patch_count);
     auto split = freeform::split(&ff_ctx, std::get<1>(init), pixel_size );
+    auto deformed = freeform::deform(&ff_ctx, split);
 
-    bolt::cl::device_vector<uint32_t> t(ff_ctx.get_control());
 
-    auto size = 16385;
-    t.resize(size);
-    for (auto i = 0U; i < size; i++)
-    {
-        t[i] = 1;
-    }
 
-    work_group_size s = d->get_max_work_group_size();
 
-    auto test = freeform::converged(&ff_ctx, t);
 
     freeform::display(grayscale, queue.get(), std::get<1>(init));
 

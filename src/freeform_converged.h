@@ -14,8 +14,6 @@
 
 #include "freeform_print_utils.h"
 
-
-
 namespace freeform
 {
     namespace details
