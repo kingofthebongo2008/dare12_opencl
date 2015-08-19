@@ -53,11 +53,11 @@ namespace freeform
         n.resize(new_size);
         keys.resize(new_size);
 
-        auto t = freeform::sort_by_key(ctx, n, keys);
+        auto t = std::move(freeform::sort_by_key(ctx, n, keys));
 
 
         
 
-        return std::move(n);
+        return std::move(t);
     }
 }

@@ -107,16 +107,41 @@ namespace freeform
 
     }
 
-    inline std::tuple< patches, bolt::cl::device_vector<uint32_t> > deform(freeform::context* ctx, const patches& p, const imaging::opencl_texture& edges)
+
+    inline points deform_average_samples(freeform::context* ctx, const points& p)
     {
-        bolt::cl::device_vector<uint32_t> stop(ctx->get_control());
-        patches                           r(ctx->get_control());
+        points avg_points(ctx->get_control());
+
+
+        avg_points.resize(p.size());
+
+        auto s = p.size() / 4;
+
+        auto program = create_freeform_deform_average_samples_kernel(ctx->get_context());
+        auto kernel = program->create_kernel("kernel_main");
+
+        kernel->set_argument(0, p.getBuffer());
+        kernel->set_argument(1, avg_points.getBuffer());
+        kernel->set_argument(2, (uint32_t) s);
+
+        ctx->launch1d(kernel.get(), s);
+        ctx->synchronize();
+
+        return std::move(avg_points);
+
+    }
+
+    inline std::tuple< patches, stops> deform(freeform::context* ctx, const patches& p, const imaging::opencl_texture& edges)
+    {
+        stops    stop(ctx->get_control());
+        patches  r(ctx->get_control());
 
         //get normals that we want to transfer along
         auto    s = deform_normal_curve_points(ctx, p);
         auto    normal_vectors = deform_scatter_normals(ctx, s);
         auto    pts            = deform_scatter_points(ctx, p);
         auto    deformed       = deform_deform_points(ctx, pts, normal_vectors, edges);
+        auto    averaged       = deform_average_samples(ctx, std::get<0>(deformed));
 
     
         return std::make_tuple( std::move(r), std::move(stop) );
