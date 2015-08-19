@@ -86,7 +86,7 @@ int32_t main( int argc, char const* argv[] )
     
     auto init  = freeform::initialize_freeform(&ff_ctx, center_image_x, center_image_y, radius, patch_count);
     auto split = freeform::split(&ff_ctx, std::get<1>(init), pixel_size );
-    auto deformed = freeform::deform(&ff_ctx, split);
+    auto deformed = freeform::deform(&ff_ctx, split, canny);
 
 
 

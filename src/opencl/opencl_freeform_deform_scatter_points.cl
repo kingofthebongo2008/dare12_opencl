@@ -28,10 +28,10 @@ kernel void kernel_main(const global read_only freeform_patch* patches, global w
     p2.y = s.y2;
     p3.y = s.y3;
 
-    points[tid + 0] = p0;
-    points[tid + 1] = p1;
-    points[tid + 2] = p2;
-    points[tid + 3] = p3;
+    points[4 * tid + 0] = p0;
+    points[4 * tid + 1] = p1;
+    points[4 * tid + 2] = p2;
+    points[4 * tid + 3] = p3;
 }
 
 
