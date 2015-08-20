@@ -5,19 +5,19 @@
 
 
 
-kernel void kernel_main(const global read_only freeform_point* points, const global read_only freeform_patch* patches, global write_only freeform_patch* deformed_patches)
+kernel void kernel_main(const global read_only freeform_point* avg_points, const global read_only freeform_point* points, const global read_only freeform_patch* patches, global write_only freeform_patch* deformed_patches)
 {
     uint32_t tid = get_global_id(0);
 
-    freeform_point r0 = points[tid + 0];
-    freeform_point r1 = points[tid + 1];
-    freeform_point r2 = points[tid + 2];
-    freeform_point r3 = points[tid + 3];
+    freeform_point r0 = avg_points[4 * tid + 0];
+    freeform_point r1 = avg_points[4 * tid + 1];
+    freeform_point r2 = avg_points[4 * tid + 2];
+    freeform_point r3 = avg_points[4 * tid + 3];
 
-    freeform_point p0 = points[tid + 4];
-    freeform_point p1 = points[tid + 5];
-    freeform_point p2 = points[tid + 6];
-    freeform_point p3 = points[tid + 7];
+    freeform_point p0 = points[4 * tid + 0];
+    freeform_point p1 = points[4 * tid + 1];
+    freeform_point p2 = points[4 * tid + 2];
+    freeform_point p3 = points[4 * tid + 3];
 
     freeform_sample  s;
 
@@ -32,6 +32,17 @@ kernel void kernel_main(const global read_only freeform_point* points, const glo
     s.y2 = r2.y - p2.y;
     s.y3 = r3.y - p3.y;
 
+    /*
+    s.x0 = 0;
+    s.x1 = 0;
+    s.x2 = 0;
+    s.x3 = 0;
+
+    s.y0 = 0;
+    s.y1 = 0;
+    s.y2 = 0;
+    s.y3 = 0;
+    */
 
     //obtain delta of moved control points
     freeform_patch r = interpolate_curve(s);

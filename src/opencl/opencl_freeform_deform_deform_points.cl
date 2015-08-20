@@ -245,7 +245,7 @@ kernel void kernel_main( const read_only image_kernel_info src, const global rea
    
         d0 = add_vector(d0, scale_vector(up, s));
 
-        points_out[id] = d0;
+        points_out[id] = pt;// d0;
         stops[id] = stop;
     }
 }

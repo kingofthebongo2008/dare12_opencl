@@ -93,6 +93,8 @@ int32_t main( int argc, char const* argv[] )
 
 
     freeform::display(grayscale, queue.get(), std::get<1>(init));
+    freeform::display(grayscale, queue.get(), split);
+    freeform::display(grayscale, queue.get(), std::get<0>(deformed));
 
 
     

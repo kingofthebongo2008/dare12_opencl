@@ -1696,8 +1696,10 @@ public:
     }
 
     cl_type operator ()() const { return object_; }
-
     cl_type& operator ()() { return object_; }
+
+
+    cl_mem getObject() const { return object_; }
 
 protected:
 

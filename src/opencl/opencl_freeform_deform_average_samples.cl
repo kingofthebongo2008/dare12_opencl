@@ -17,8 +17,8 @@ freeform_point  point_add(freeform_point a, freeform_point b)
 {
     freeform_point  r;
 
-    r.x = a.x * b.x;
-    r.y = a.y * b.x;
+    r.x = a.x + b.x;
+    r.y = a.y + b.y;
 
     return  r;
 }

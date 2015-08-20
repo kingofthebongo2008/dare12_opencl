@@ -65,6 +65,11 @@ namespace freeform
                 get_queue()->launch2d( kernel, x, y );
             }
 
+            void copy(cl_mem src, cl_mem dst)
+            {
+                get_queue()->copy(src, dst);
+            }
+
             void synchronize() const
             {
                 get_queue()->synchronize();

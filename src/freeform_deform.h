@@ -112,12 +112,12 @@ namespace freeform
     inline points deform_average_samples(freeform::context* ctx, const points& p)
     {
         points avg_points(ctx->get_control());
-
-
         avg_points.resize(p.size());
 
-        auto s = p.size() / 4;
+       
+        ctx->copy( p.getBuffer().getObject(), avg_points.getBuffer().getObject() );
 
+        auto s = p.size() / 4;
         auto program = create_freeform_deform_average_samples_kernel(ctx->get_context());
         auto kernel = program->create_kernel("kernel_main");
 
@@ -132,19 +132,20 @@ namespace freeform
 
     }
 
-    inline patches deform_gather_samples(freeform::context* ctx, const points& points, const patches& patches_in)
+    inline patches deform_gather_samples(freeform::context* ctx, const points& average_points, const points& points, const patches& patches_in)
     {
         patches p(ctx->get_control());
 
-        auto s = patches_in.size();
+        auto s = points.size() / 4;
         p.resize(s);
 
         auto program = create_freeform_deform_gather_samples_kernel(ctx->get_context());
         auto kernel = program->create_kernel("kernel_main");
 
-        kernel->set_argument(0, points.getBuffer());
-        kernel->set_argument(1, patches_in.getBuffer());
-        kernel->set_argument(2, p.getBuffer());
+        kernel->set_argument(0, average_points.getBuffer());
+        kernel->set_argument(1, points.getBuffer());
+        kernel->set_argument(2, patches_in.getBuffer());
+        kernel->set_argument(3, p.getBuffer());
 
         ctx->launch1d(kernel.get(), s);
         ctx->synchronize();
@@ -163,7 +164,7 @@ namespace freeform
         auto    pts                 = deform_scatter_points(ctx, p);
         auto    deformed            = deform_deform_points(ctx, pts, normal_vectors, edges);
         auto    averaged            = deform_average_samples(ctx, std::get<0>(deformed));
-        auto    deformed_patches    = deform_gather_samples(ctx, averaged, p);
+        auto    deformed_patches    = deform_gather_samples(ctx, averaged, std::get<0>(deformed), p);
 
     
         return std::make_tuple(std::move(deformed_patches), std::move(stop));

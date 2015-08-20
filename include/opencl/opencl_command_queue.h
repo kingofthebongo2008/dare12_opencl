@@ -75,6 +75,11 @@ namespace opencl
         {
             throw_if_failed(clFinish(queue));
         }
+
+        inline void copy(cl_command_queue queue, cl_mem src, cl_mem dst, size_t size)
+        {
+            throw_if_failed(clEnqueueCopyBuffer(queue, src, dst, 0, 0, size, 0, nullptr, nullptr));
+        }
     }
 
     class command_queue : public util::noncopyable
@@ -173,6 +178,19 @@ namespace opencl
         void launch2d(const kernel* kernel, uint32_t x, uint32_t y)
         {
             details::launch2d(m_command_queue, *kernel, x, y);
+        }
+
+        void copy( const buffer* src, const buffer* dst)
+        {
+            details::copy(m_command_queue, (cl_mem) *src, (cl_mem) *dst, src->get_size() );
+        }
+
+        void copy(cl_mem  src, cl_mem dst)
+        {
+            size_t s = 0;
+            size_t real_s;
+            throw_if_failed(clGetMemObjectInfo(src, CL_MEM_SIZE, sizeof(s), &s, &real_s));
+            details::copy(m_command_queue, src, dst, s);
         }
 
         void synchronize()
