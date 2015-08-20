@@ -139,6 +139,9 @@ namespace freeform
         auto s = points.size() / 4;
         p.resize(s);
 
+
+        auto ra = points[0];
+
         auto program = create_freeform_deform_gather_samples_kernel(ctx->get_context());
         auto kernel = program->create_kernel("kernel_main");
 
@@ -149,6 +152,10 @@ namespace freeform
 
         ctx->launch1d(kernel.get(), s);
         ctx->synchronize();
+
+        auto rc = average_points[0];
+        freeform_patch rb = p[0];
+        freeform_patch rd = patches_in[0];
 
         return std::move(p);
 
@@ -164,7 +171,7 @@ namespace freeform
         auto    pts                 = deform_scatter_points(ctx, p);
         auto    deformed            = deform_deform_points(ctx, pts, normal_vectors, edges);
         auto    averaged            = deform_average_samples(ctx, std::get<0>(deformed));
-        auto    deformed_patches    = deform_gather_samples(ctx, averaged, std::get<0>(deformed), p);
+        auto    deformed_patches    = deform_gather_samples(ctx, averaged, pts, p);
 
     
         return std::make_tuple(std::move(deformed_patches), std::move(stop));
