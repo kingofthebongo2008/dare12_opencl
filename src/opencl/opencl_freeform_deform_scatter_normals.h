@@ -23,14 +23,23 @@ namespace freeform
 
         inline cl_program create_freeform_deform_scatter_normals_kernel( cl_context context, cl_device_id device )
         {
-            cl_int binary_status = 0;
-            cl_int errcode_ret = 0;
+            static cl_program p = nullptr;
 
-            auto binary = details::get_freeform_deform_scatter_normals_ir();
-            auto length = std::get<1>(binary);
-            auto code = std::get<0 >(binary);
+            if (p == nullptr)
+            {
 
-            return opencl::create_program( context, device, code, length);
+                cl_int binary_status = 0;
+                cl_int errcode_ret = 0;
+
+                auto binary = details::get_freeform_deform_scatter_normals_ir();
+                auto length = std::get<1>(binary);
+                auto code = std::get<0 >(binary);
+
+                return opencl::create_program( context, device, code, length);
+            }
+
+            opencl::throw_if_failed(clRetainProgram(p));
+            return p;
         }
     }
 

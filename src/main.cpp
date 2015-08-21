@@ -32,6 +32,8 @@
 
 #include "opencl_sort_by_key.h"
 
+#include <chrono>
+
 namespace freeform
 {
     void display(const imaging::opencl_texture& t, const opencl::command_queue* queue, const samples& p);
@@ -83,18 +85,29 @@ int32_t main( int argc, char const* argv[] )
     auto pixel_size = std::max(1.0f / grayscale.get_width(), 1.0f / grayscale.get_height());
     auto radius = 20.0f * pixel_size;
     auto patch_count = 20;
-    
+
+    //filter out the records that match the composite criteria
+    std::chrono::steady_clock::time_point start1 = std::chrono::steady_clock::now();
+
     auto init  = freeform::initialize_freeform(&ff_ctx, center_image_x, center_image_y, radius, patch_count);
-    auto split = freeform::split(&ff_ctx, std::get<1>(init), pixel_size );
-    auto deformed = freeform::deform(&ff_ctx, split, canny);
+
+    auto patches = std::get<1>(init);
+
+    
+    for (auto i = 0U; i < 26; ++i)
+    {
+        auto split  = freeform::split(&ff_ctx, patches, pixel_size);
+        auto deformed = freeform::deform(&ff_ctx, split, canny);
+        patches = std::move(std::get<0>(deformed));
+    }
+
+    std::chrono::steady_clock::time_point end1 = std::chrono::steady_clock::now();
+    std::cout << "Filtering on device took: " << std::chrono::duration_cast<std::chrono::milliseconds>(end1 - start1).count() << " ms" << std::endl;
 
 
 
 
-
-    freeform::display(grayscale, queue.get(), std::get<1>(init));
-    freeform::display(grayscale, queue.get(), split);
-    freeform::display(grayscale, queue.get(), std::get<0>(deformed));
+    freeform::display(grayscale, queue.get(), patches);
 
 
     

@@ -158,7 +158,7 @@ kernel void kernel_main( const read_only image_kernel_info src, const global rea
 
     float  pixel_size = max(1.0f / w, 1.0f / h);
     float  pixel_size_y = 1.0f / h;
-    float  scale = 21.5f;
+    float  scale = 1.5f;
 
     float2 k1 = (float2)( scale * pixel_size, scale * pixel_size);   //adjust this for faster convergence
 
