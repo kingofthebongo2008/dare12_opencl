@@ -27,6 +27,7 @@ Algorithm.
     3. Generate_Sample -> generates initial circle of patches
     4. Split the patches-> splits the patches according to the heuristings. Works like this: From every patch we have either 1 or 2 patches after the kernel execution. Since we work in parallel. Every result is independent of time. So we produce the new patches in random order and stich them after that with a sort ( bitonic sort ) procedure.
     5. Deform kernels. Patches are converted to points, Normals to the patches are calculated, Normals are converted to points also. Deform kernel is applied that fetches from the texture. After the deform, Points are stiched together to get C0 continuity and after that patches are assembled again
+    6. Check for convergence with reduction.
 
     To support the algorithm there are several files and classes which are responsible for loading the kernels. Kernels are compiled to spir files in a temp directory and after that embedded like C arrays in the executable. This is done, so we do not have to ship 30-40 small binary files with the executable.
 
