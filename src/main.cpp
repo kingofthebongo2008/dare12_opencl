@@ -58,7 +58,7 @@ int32_t main( int argc, char const* argv[] )
     auto url   = fs::build_media_url(source, L"temp.png");
     auto url_1 = fs::build_media_url(source, L"temp1.png");
 
-    auto d          = create_device(opencl::cpu, opencl::intel);
+    auto d          = create_device(opencl::gpu, opencl::intel);
     auto ctx        = d->create_context();
     auto queue      = ctx->create_command_queue();
 
@@ -94,7 +94,7 @@ int32_t main( int argc, char const* argv[] )
     auto patches = std::get<1>(init);
 
     
-    for (auto i = 0U; i < 26; ++i)
+    for (auto i = 0U; i < 200; ++i)
     {
         auto split  = freeform::split(&ff_ctx, patches, pixel_size);
         auto deformed = freeform::deform(&ff_ctx, split, canny);
@@ -104,12 +104,7 @@ int32_t main( int argc, char const* argv[] )
     std::chrono::steady_clock::time_point end1 = std::chrono::steady_clock::now();
     std::cout << "Filtering on device took: " << std::chrono::duration_cast<std::chrono::milliseconds>(end1 - start1).count() << " ms" << std::endl;
 
-
-
-
     freeform::display(grayscale, queue.get(), patches);
-
-
     
     return 0;
 }

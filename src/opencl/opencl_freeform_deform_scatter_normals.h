@@ -35,7 +35,7 @@ namespace freeform
                 auto length = std::get<1>(binary);
                 auto code = std::get<0 >(binary);
 
-                return opencl::create_program( context, device, code, length);
+                p = opencl::create_program( context, device, code, length);
             }
 
             opencl::throw_if_failed(clRetainProgram(p));

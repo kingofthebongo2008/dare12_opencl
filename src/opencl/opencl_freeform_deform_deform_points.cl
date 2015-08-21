@@ -207,6 +207,9 @@ kernel void kernel_main( const read_only image_kernel_info src, const global rea
     {
         d0 = pt;
         stop = 1;
+
+        points_out[id] = d0;
+        stops[id] = stop;
     }
     else
     {
