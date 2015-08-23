@@ -16,7 +16,7 @@ namespace gx
 
     public:
 
-        default_application(const wchar_t* window_title) : base(window_title)
+        default_application(const wchar_t* window_title, uint32_t width, uint32_t height) : base(window_title, width, height)
             , m_mouse_state(window_width(get_window()), window_height(get_window()))
         {
             using namespace os::windows;

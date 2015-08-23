@@ -159,7 +159,7 @@ namespace os
         {
         public:
 
-            windowed_applicaion( HINSTANCE instance, const wchar_t* window_name) : application(create_window(instance, window_name), instance)
+            windowed_applicaion( HINSTANCE instance, const wchar_t* window_name, uint32_t width, uint32_t height ) : application(create_window(instance, window_name, width, height), instance)
             {
 
             }
@@ -187,13 +187,13 @@ namespace os
 
             private:
 
-            HWND create_window( HINSTANCE instance, const wchar_t* window_name )
+            HWND create_window( HINSTANCE instance, const wchar_t* window_name, uint32_t width, uint32_t height )
             {
                 auto wnd_class = create_window_class(instance, DefaultWindowProc );
                 
                 if (wnd_class)
                 {
-                    auto window = os::windows::create_window( instance, window_name );
+                    auto window = os::windows::create_window( width, height, instance, window_name );
 
                     if (window)
                     {

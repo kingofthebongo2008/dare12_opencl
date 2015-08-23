@@ -15,7 +15,7 @@ namespace freeform
 
     public:
 
-        patch_application(const wchar_t* window_title, const imaging::opencl_texture& t, const opencl::command_queue* queue, const graphic::patch_draw_info& gdi, const graphic::transform_info& transform_info) : base(window_title)
+        patch_application(const wchar_t* window_title, const imaging::opencl_texture& t, const opencl::command_queue* queue, const graphic::patch_draw_info& gdi, const graphic::transform_info& transform_info) : base(window_title, t.get_width(), t.get_height() )
             , m_texture(create_texture( m_context.m_device, t, queue ))
             , m_texture_view( d3d11::create_shader_resource_view( m_context.m_device, m_texture) )
             , m_transform_info( transform_info )

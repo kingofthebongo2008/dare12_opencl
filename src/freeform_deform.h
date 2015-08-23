@@ -1,6 +1,7 @@
 #pragma once
 
 #include <tuple>
+#include <chrono>
 
 #include <opencl/opencl_context.h>
 #include <opencl/opencl_command_queue.h>
@@ -163,6 +164,9 @@ namespace freeform
 
     inline std::tuple< patches, stops> deform(freeform::context* ctx, const patches& p, const imaging::opencl_texture& edges)
     {
+        //filter out the records that match the composite criteria
+        //std::chrono::steady_clock::time_point start1 = std::chrono::steady_clock::now();
+
         stops    stop(ctx->get_control());
 
         //get normals that we want to transfer along
@@ -174,6 +178,9 @@ namespace freeform
         auto    deformed_patches    = deform_gather_samples(ctx, averaged, pts, p);
 
     
+//        std::chrono::steady_clock::time_point end1 = std::chrono::steady_clock::now();
+//        std::cout << "Deform took: " << std::chrono::duration_cast<std::chrono::milliseconds>(end1 - start1).count() << " ms" << std::endl;
+
         return std::make_tuple(std::move(deformed_patches), std::move(stop));
     }
 }

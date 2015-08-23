@@ -36,4 +36,48 @@ Visualization:
 1. Visualization is done with directx. Directx has abilities to show lines and also with the help of the domain shaders and tessellation one can render bezier patches. I have developed there a library that takes the patches from opencl and loads them into directx. Everything is located src/shader directory.
 
 
+so about, why flip takes so much time, the reasons are the following:
+1. I have 2 papers and 1 implementation none of which seems to explain it clear enough. matlab code is not implemented also according to the papier review.pdf (normals are not calculated from bezier)
+1.1. The matlab code removes one segement at a time, also it checks that then number of patches is above 30, which looks like hacks.
+1.2. The papier review 1 does not explain two things. reorder  and the flipping procedures arenot at all besides a graphic
+1.3. papier.pdf does not explain how topology changes are implemented except by one example: 3,8, becomes 3,6, 3,4,3,5 become 6,1,62. 
+
+Other problems:
+I see that in the papers to attract to edges some form of gaussain blurs must be performed on the image. this is not done, when the image is sampled, also it should be some kind of diffusion transform. This the reason that the curve does not stich to the boundary nicely enough.
+
+Overall from these incomplete pieces i am trying to get viable information, which has nothing to do with either opencl, nor cuda, this is why it takes time.
+
+1. So things that i do not understand in algorithm 4
+
+1. It is written -> Do local test intersection on neighbouring patches -> this is fine
+2. They say if not empty then do disconnect, ok, if it is empty we do what? Now i do nothing.
+2. So how we are supposed to process the list, say we find 
+
+
+1. Initialization of cuda or opencl drivers -> around 0.5-1 sec
+2. Compile a kernel -> 1  - 2 seconds
+3. Algorithm work -> heaviest is the deform procedure because it operates on the whole picture, + canny filter
+
+
+1. Results opencl intel 4770k 8 cores
+1.1. Total time 1446 ms
+1.2. Algorithm time 1037 ms
+1.3. Init
+1.4. Split per iteration 1 ms
+1.5. Deform per iteration 6 ms
+
+1. Results opencl intel 4770k 8 cores
+1.1. Total time 1446 ms
+1.2. Algorithm time 1037 ms
+1.3. Init
+1.4. Split per iteration 1 ms
+1.5. Deform per iteration 6 ms
+
+1. Results opencl intel gpu HD4600 
+1.1. Total time 1092 ms
+1.2. Algorithm time 622 ms
+1.3. Init
+1.4. Split per iteration 2 ms
+1.5. Deform per iteration 3 ms
+
 

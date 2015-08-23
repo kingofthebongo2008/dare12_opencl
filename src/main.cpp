@@ -50,15 +50,22 @@ int32_t main( int argc, char const* argv[] )
 
     using namespace opencl;
 
+    /*
     auto url0 = fs::build_media_url(source, L"essaisynth2.png");
     auto url1 = fs::build_media_url(source, L"essaisynth1.png");
     auto url2 = fs::build_media_url(source, L"essaisynth2_grayscale.png");
     auto url3 = fs::build_media_url(source, L"essaisynth2_canny.png");
+    */
 
     auto url   = fs::build_media_url(source, L"temp.png");
     auto url_1 = fs::build_media_url(source, L"temp1.png");
 
-    auto d          = create_device(opencl::gpu, opencl::intel);
+    auto url0 = fs::build_media_url(source, L"circle.png");
+    auto url1 = fs::build_media_url(source, L"circle1_obstacles.png");
+    auto url2 = fs::build_media_url(source, L"circle_grayscale.png");
+    auto url3 = fs::build_media_url(source, L"circle_canny.png");
+
+    auto d          = create_device(opencl::cpu, opencl::intel);
     auto ctx        = d->create_context();
     auto queue      = ctx->create_command_queue();
 
@@ -84,25 +91,30 @@ int32_t main( int argc, char const* argv[] )
 
     auto pixel_size = std::max(1.0f / grayscale.get_width(), 1.0f / grayscale.get_height());
     auto radius = 20.0f * pixel_size;
-    auto patch_count = 20;
+    auto patch_count = 10;
 
-    //filter out the records that match the composite criteria
-    std::chrono::steady_clock::time_point start1 = std::chrono::steady_clock::now();
+    freeform::patches patches;
 
-    auto init  = freeform::initialize_freeform(&ff_ctx, center_image_x, center_image_y, radius, patch_count);
-
-    auto patches = std::get<1>(init);
-
-    
-    for (auto i = 0U; i < 200; ++i)
+    for (auto i = 0U; i < 2; ++i)
     {
-        auto split  = freeform::split(&ff_ctx, patches, pixel_size);
-        auto deformed = freeform::deform(&ff_ctx, split, canny);
-        patches = std::move(std::get<0>(deformed));
+        //filter out the records that match the composite criteria
+        std::chrono::steady_clock::time_point start1 = std::chrono::steady_clock::now();
+
+        auto init = freeform::initialize_freeform(&ff_ctx, center_image_x, center_image_y, radius, patch_count);
+
+        patches = std::get<1>(init);
+
+        for (auto i = 0U; i < 90; ++i)
+        {
+            auto split = freeform::split(&ff_ctx, patches, pixel_size);
+            auto deformed = freeform::deform(&ff_ctx, split, canny);
+            patches = std::move(std::get<0>(deformed));
+        }
+
+        std::chrono::steady_clock::time_point end1 = std::chrono::steady_clock::now();
+        std::cout << "Filtering on device took: " << std::chrono::duration_cast<std::chrono::milliseconds>(end1 - start1).count() << " ms" << std::endl;
     }
 
-    std::chrono::steady_clock::time_point end1 = std::chrono::steady_clock::now();
-    std::cout << "Filtering on device took: " << std::chrono::duration_cast<std::chrono::milliseconds>(end1 - start1).count() << " ms" << std::endl;
 
     freeform::display(grayscale, queue.get(), patches);
     

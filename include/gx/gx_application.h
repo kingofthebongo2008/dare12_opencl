@@ -16,16 +16,16 @@ namespace gx
         typedef os::windows::windowed_applicaion base;
 
         public:
-            application( HINSTANCE instance, const wchar_t* window_title ) : 
-            base( instance, window_title )
+            application( HINSTANCE instance, const wchar_t* window_title, uint32_t width, uint32_t height ) : 
+            base( instance, window_title, width, height )
             , m_context( d3d11::create_system_context ( get_window() ) )
             , m_occluded_by_another_window(false)
         {
 
         }
 
-            application( const wchar_t* window_title  ) : 
-            base( ::GetModuleHandle( nullptr ), window_title )
+            application( const wchar_t* window_title, uint32_t width, uint32_t height  ) : 
+            base( ::GetModuleHandle( nullptr ), window_title, width, height )
             , m_context( d3d11::create_system_context ( get_window() ) )
             , m_occluded_by_another_window(false)
         {

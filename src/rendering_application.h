@@ -55,7 +55,7 @@ namespace freeform
 
     public:
 
-        rendering_application(const wchar_t* window_title) : base(window_title)
+        rendering_application(const wchar_t* window_title, uint32_t width, uint32_t height) : base(window_title, width, height)
             , m_d2d_factory(d2d::create_d2d_factory_single_threaded())
             , m_dwrite_factory(dwrite::create_dwrite_factory())
             , m_text_format(dwrite::create_text_format(m_dwrite_factory))

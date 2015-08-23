@@ -21,6 +21,9 @@ namespace freeform
 {
     inline patches split( freeform::context* ctx, const patches& p, float pixel_size)
     {
+        //filter out the records that match the composite criteria
+        //std::chrono::steady_clock::time_point start1 = std::chrono::steady_clock::now();
+
         bolt::cl::device_vector<uint32_t> element_count(ctx->get_control());
         bolt::cl::device_vector<uint32_t> keys(ctx->get_control());
 
@@ -55,7 +58,8 @@ namespace freeform
 
         auto t = std::move(freeform::sort_by_key(ctx, n, keys));
 
-
+        //std::chrono::steady_clock::time_point end1 = std::chrono::steady_clock::now();
+        //std::cout << "Split took: " << std::chrono::duration_cast<std::chrono::milliseconds>(end1 - start1).count() << " ms" << std::endl;
         
 
         return std::move(t);
